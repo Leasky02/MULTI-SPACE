@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour
     public void Shoot(GameObject player)
     {
         //set direction to fire to player rotation
-        float directionToFire = player.GetComponent<PlayerMovement>().currentRotation;
+        float directionToFire = player.GetComponent<PlayerMovement>().currentRotation ;
 
         //fire up
         if (directionToFire == 0)
@@ -46,7 +46,7 @@ public class Bullet : MonoBehaviour
         }
 
         //delete bullet after 1s
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject, 0.8f);
     }
 
     //when the bullet collides with something
@@ -57,7 +57,6 @@ public class Bullet : MonoBehaviour
         {
             //deal damage function to enemy health script
         }
-
         Destroy(gameObject);
     }
 }
