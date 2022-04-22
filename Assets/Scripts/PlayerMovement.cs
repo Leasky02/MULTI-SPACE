@@ -13,11 +13,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private int speed;
 
     //rotation
-    public float currentRotation;
+    [HideInInspector] public float currentRotation;
 
     //directional movement checks
     private bool movingHorizontally = false;
     private bool movingVertically = false;
+
+    //animator of 3D child object
+    [SerializeField] private Animator myAnimator;
+    //animations to play
+    [SerializeField] private string animToPlay;
+    //animator check 
+    private bool animPlaying = false;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +36,33 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if player IS moving
+        if (Input.GetAxis("Horizontal" + playerID) + Input.GetAxis("Vertical" + playerID) != 0)
+        {
+            //set isMoving to true
+            myAnimator.SetBool("IsMoving", true);
+
+            //if animation is NOT playing
+            if (!animPlaying)
+            {
+                //play WALKING animation (first animation in array)
+                myAnimator.Play(animToPlay);
+                animPlaying = true;
+            }
+        }
+        //player is NOT moving
+        else
+        {
+            //set isMoving to false
+            myAnimator.SetBool("IsMoving", false);
+
+            //if ANIMATOR IS playing
+            if (animPlaying)
+            {
+                animPlaying = false;
+            }
+        }
+
         //if player isn't moving vertically
         if(!movingVertically)
         {
