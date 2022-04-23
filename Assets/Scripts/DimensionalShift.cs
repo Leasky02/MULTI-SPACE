@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.Rendering.PostProcessing;
 
 public class DimensionalShift : MonoBehaviour
 {
@@ -19,8 +20,16 @@ public class DimensionalShift : MonoBehaviour
     //camera
     [SerializeField] private GameObject cam;
 
+    //post processing volume
+    [SerializeField] private GameObject postProcessVolume;
+    [SerializeField] private float effectTransitionSpeed;
+    private float requiredWeight = 0f;
+
+    //audio volume variable
+    private float audioVolume = 0f;
+
     //variable holding current dimensional state
-    private bool is3D = false;
+    public static bool is3D = false;
 
     // Update is called once per frame
     void Update()
@@ -38,6 +47,14 @@ public class DimensionalShift : MonoBehaviour
                 MoveTo3D();
             }
         }
+
+        //lerp weight of post processing 
+        float currentWeight = postProcessVolume.GetComponent<PostProcessVolume>().weight;
+        postProcessVolume.GetComponent<PostProcessVolume>().weight = Mathf.Lerp(currentWeight , requiredWeight, Time.deltaTime * effectTransitionSpeed);
+
+        //lerp audio volume as required
+        float currentVolume = GetComponent<AudioSource>().volume;
+        GetComponent<AudioSource>().volume = Mathf.Lerp(currentVolume, audioVolume, Time.deltaTime * effectTransitionSpeed);
     }
 
     private void MoveTo3D()
@@ -59,6 +76,12 @@ public class DimensionalShift : MonoBehaviour
         //turn off collider of tilemap
         innerTilemap.GetComponent<TilemapCollider2D>().enabled = false;
 
+        //set desired post processing weight to show post processing
+        requiredWeight = 1f;
+
+        //set audio volume and play which restarts it without need to stop
+        audioVolume = 1f;
+        GetComponent<AudioSource>().Play();
 
         is3D = true;
     }
@@ -81,6 +104,12 @@ public class DimensionalShift : MonoBehaviour
 
         //turn on collider of tilemap
         innerTilemap.GetComponent<TilemapCollider2D>().enabled = true;
+
+        //set desired post processing weight to turn off post processing
+        requiredWeight = 0f;
+
+        //set audio volume
+        audioVolume = 0f;
 
         is3D = false;
     }

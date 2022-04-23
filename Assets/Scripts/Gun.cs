@@ -21,8 +21,8 @@ public class Gun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if shoot button pressed
-        if(Input.GetButton("Shoot" + playerID) && Time.time >= nextTimeToFire)
+        //if shoot button pressed AND player isn't in 3D
+        if(Input.GetButton("Shoot" + playerID) && Time.time >= nextTimeToFire && !DimensionalShift.is3D)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
             //spawn bullet at the spawn position
