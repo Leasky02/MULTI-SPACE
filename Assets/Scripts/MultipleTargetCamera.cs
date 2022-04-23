@@ -7,14 +7,18 @@ public class MultipleTargetCamera : MonoBehaviour
 {
     //targets for camera
     [SerializeField] private List<Transform> targets;
-    [SerializeField] private Vector3 offset;
+    public Vector3 offset;
+
+    //rotation
+    [HideInInspector] public float rotation_X;
+    [SerializeField] private float rotationSpeed;
     
     //velocity of camera movement
     private Vector3 velocity;
     private float smoothTime = 0.1f;
 
     //zoom boundries
-    [SerializeField] private float minZoom;
+    public float minZoom;
     [SerializeField] private float maxZoom;
     [SerializeField] private float zoomLimiter;
 
@@ -38,6 +42,7 @@ public class MultipleTargetCamera : MonoBehaviour
         //adjust camera position and zoom
         Move();
         Zoom();
+        Rotate();
     }
 
     private void Zoom()
@@ -69,6 +74,14 @@ public class MultipleTargetCamera : MonoBehaviour
         Vector3 newPosition = centerPoint + offset;
         //set camera position to the new position
         transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, smoothTime);
+    }
+
+    private void Rotate()
+    {
+        Quaternion currentRotation = transform.rotation;
+        Quaternion wantedRotation = Quaternion.Euler(rotation_X, 0, 0);
+
+        transform.rotation = Quaternion.RotateTowards(currentRotation, wantedRotation, Time.deltaTime * rotationSpeed);
     }
 
     private Vector3 GetCenterPoint()
