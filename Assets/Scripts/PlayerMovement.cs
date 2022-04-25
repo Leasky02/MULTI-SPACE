@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //if player IS moving
-        if (Input.GetAxis("Horizontal" + playerID) + Input.GetAxis("Vertical" + playerID) != 0)
+        if (Input.GetAxis("Horizontal" + playerID)  != 0 || Input.GetAxis("Vertical" + playerID) != 0)
         {
             //set isMoving to true
             myAnimator.SetBool("IsMoving", true);

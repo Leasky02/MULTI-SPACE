@@ -29,6 +29,14 @@ public class MultipleTargetCamera : MonoBehaviour
     private void Start()
     {
         cam = GetComponent<Camera>();
+
+        //if there is only 1 player
+        if(MultiplayerManager.playerCount == 1)
+        {
+            //remove / destroy player 2
+            Destroy(targets[1].gameObject);
+            targets.Remove(targets[1]);
+        }
     }
     //called after every update
     private void LateUpdate()
@@ -91,7 +99,6 @@ public class MultipleTargetCamera : MonoBehaviour
         {
             return targets[0].position;
         }
-
         var bounds = new Bounds(targets[0].position, Vector3.zero);
         //calculate position between all targets
         for (int i = 0; i < targets.Count; i++)
