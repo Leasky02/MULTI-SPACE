@@ -30,6 +30,7 @@ public class DimensionalShift : MonoBehaviour
     private float audioVolume = 0f;
 
     //UI elements and colours
+    [SerializeField] private GameObject cooldownContainer_OBJ;
     [SerializeField] private Text cooldown_TXT;
     [SerializeField] private Text ready_TXT;
     [SerializeField] private Text active_TXT;
@@ -91,6 +92,9 @@ public class DimensionalShift : MonoBehaviour
         {
             if (seconds > 0)
             {
+                //play ticking sound
+                cooldownContainer_OBJ.GetComponent<AudioSource>().Play();
+                //remove seconds
                 seconds--;
                 //set the text to say seconds
                 seconds_TXT.text = (":" + seconds);
@@ -181,6 +185,9 @@ public class DimensionalShift : MonoBehaviour
         active_TXT.gameObject.SetActive(true);
         seconds_TXT.gameObject.SetActive(true);
         ready_TXT.gameObject.SetActive(false);
+
+        //play ticking sound
+        cooldownContainer_OBJ.GetComponent<AudioSource>().Play();
     }
 
     private void MoveTo2D()
