@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
     //health variables
     [SerializeField] private int maxHealth;
     [SerializeField] private int currentHealth;
+    [SerializeField] private bool dead;
 
     //target that enemy is chasing
     [SerializeField] private Transform target;
@@ -38,8 +39,8 @@ public class EnemyHealth : MonoBehaviour
 
     private void Update()
     {
-        //if player is within reach and can deal damage
-        if (doDamage && Vector3.Distance(target.transform.position, gameObject.transform.position) < attackDistance)
+        //if player is within reach and can deal damage and enemy isn't dead
+        if (doDamage && Vector3.Distance(target.transform.position, gameObject.transform.position) < attackDistance && !dead)
         {
             //do damage to player
             target.gameObject.GetComponent<PlayerHealth>().Damage(attackDamage);
@@ -63,7 +64,7 @@ public class EnemyHealth : MonoBehaviour
     public void Damage(int damage)
     {
         currentHealth -= damage;
-        //if player is dead
+        //if enemy is dead
         if (currentHealth <= 0)
         {
             Die();
@@ -72,7 +73,21 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
+        dead = true;
+
+        //stop rendering alien GFX
+        gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+        //remove collider
+        GetComponent<PolygonCollider2D>().enabled = false;
+        //play death sound
+        GetComponent<AudioSource>().Play();
+        //play death particles
+        gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
+        //stop enemy moving
+        GetComponent<Rigidbody2D>().isKinematic = true;
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+
         //destroy itself
-        Destroy(gameObject);
+        Destroy(gameObject , 2f);
     }
 }

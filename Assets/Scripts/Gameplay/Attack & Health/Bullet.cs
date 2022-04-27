@@ -8,7 +8,10 @@ public class Bullet : MonoBehaviour
     [SerializeField] private int speed;
     //static variable for damage player can do (50 as default)
     static int damage = 50;
-
+    //bullet been used already?
+    private bool used = false;
+    //player who shot bullet
+    private GameObject shooter;
     //audio clips
     [SerializeField] private AudioClip bulletShoot;
     [SerializeField] private AudioClip bulletHit;
@@ -17,6 +20,9 @@ public class Bullet : MonoBehaviour
     {
         //set damage of bullet according to equation and wave***
 
+
+        //set player as shooter (stops bullet colliding inside of player when spawned)
+        shooter = player;
 
         //set direction to fire to player rotation
         float directionToFire = player.GetComponent<PlayerMovement>().currentRotation ;
@@ -62,19 +68,30 @@ public class Bullet : MonoBehaviour
     //when the bullet collides with something
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //if collision is with enemy
-        if(collision.CompareTag("Enemy"))
+        //if the object collided with is not the player who shot the bullet
+        if(collision.gameObject != shooter)
         {
-            collision.gameObject.GetComponent<EnemyHealth>().Damage(damage);
+            //if collision is with enemy and bullet hasn't already hit anything else
+            if (collision.CompareTag("Enemy") && !used)
+            {
+                collision.gameObject.GetComponent<EnemyHealth>().Damage(damage);
 
-            //Play target HIT sound
-            GetComponent<AudioSource>().clip = bulletHit;
-            GetComponent<AudioSource>().Play();
+                //Play target HIT sound
+                GetComponent<AudioSource>().clip = bulletHit;
+                GetComponent<AudioSource>().Play();
+            }
+            //remove bullet
+            GetComponent<SpriteRenderer>().enabled = false;
+            GetComponent<BoxCollider2D>().enabled = false;
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            Destroy(gameObject, 1f);
+
+            //play death particles
+            gameObject.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
+
+            //bullet cannot deal damage anymore
+            //prevent it being used on multiple enemies
+            used = true;
         }
-        //remove bullet
-        GetComponent<SpriteRenderer>().enabled = false;
-        GetComponent<BoxCollider2D>().enabled = false;
-        Destroy(gameObject, 1f);
-
     }
 }

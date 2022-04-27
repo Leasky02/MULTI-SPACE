@@ -48,7 +48,7 @@ public class PlayerHealth : MonoBehaviour
         {
             //prevent player from receiving damage again
             receiveDamage = false;
-            Invoke("AllowReceiveDamage", 0.5f);
+            Invoke("AllowReceiveDamage", 0.3f);
 
             //take damage away from current health
             currentHealth -= damage;

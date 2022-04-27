@@ -116,6 +116,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         //set rotation of object
-        transform.eulerAngles = new Vector3(0,0,currentRotation);
+        Quaternion currentAngle = transform.rotation;
+        Quaternion newAngle = Quaternion.Euler(0,0,currentRotation);
+        transform.rotation = Quaternion.RotateTowards(currentAngle, newAngle, Time.deltaTime * 1000);
     }
 }
