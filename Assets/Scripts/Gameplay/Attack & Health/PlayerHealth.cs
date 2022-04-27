@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     //healthbar variable
     [SerializeField] private Slider healthBar;
     [SerializeField] private Image healthBar_FILL;
+    [SerializeField] private Image healthBar_DAMAGE;
 
     //audio volume
     private float desiredVolume = 0f;
@@ -71,6 +72,9 @@ public class PlayerHealth : MonoBehaviour
 
             //update health bar
             healthBar.value = currentHealth;
+
+            //play animation of health bar damage
+            healthBar_DAMAGE.GetComponent<Animator>().Play("healthbar");
 
             //play damage audio clip with random pitch
             if (!GetComponent<AudioSource>().isPlaying)

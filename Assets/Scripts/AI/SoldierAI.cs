@@ -19,15 +19,6 @@ public class SoldierAI : MonoBehaviour
     private Seeker seeker;
     private Rigidbody2D rb;
 
-    //damage variables
-    private bool doDamage = true;
-    //length of time between attacks
-    [SerializeField] private float attackCooldown;
-    //distance from player to attack
-    [SerializeField] private float attackDistance;
-    //damage (10 by default)
-    [SerializeField] private int attackDamage = 12;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -63,6 +54,9 @@ public class SoldierAI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //set target of AI's health script to current target
+        GetComponent<EnemyHealth>().SetTarget(target);
+
         if (path == null)
             return;
         //if reached the end of the path
@@ -93,23 +87,5 @@ public class SoldierAI : MonoBehaviour
 
         //set rotation
         transform.rotation = Quaternion.LookRotation(Vector3.forward, rb.velocity);
-    }
-
-    private void Update()
-    {
-        //if player is within reach and can deal damage
-        if (doDamage && Vector3.Distance(target.transform.position, gameObject.transform.position) < attackDistance)
-        {
-            //do damage to player
-            target.gameObject.GetComponent<PlayerHealth>().Damage(attackDamage);
-            //prevent damage
-            doDamage = false;
-            //cue damage reactivate
-            Invoke("AllowDamage", attackCooldown);
-        }
-    }
-    private void AllowDamage()
-    {
-        doDamage = true;
     }
 }
