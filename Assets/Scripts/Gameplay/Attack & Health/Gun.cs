@@ -7,8 +7,8 @@ public class Gun : MonoBehaviour
     //playerID
     [SerializeField] private int playerID;
 
-    //fire rate
-    [SerializeField] private float fireRate;
+    //static fire rate with default 2 to start with
+    static float fireRate = 2f;
     private float nextTimeToFire = 0f;
     //damage
     [SerializeField] private int damage;

@@ -6,9 +6,18 @@ public class Bullet : MonoBehaviour
 {
     //speed of bullet
     [SerializeField] private int speed;
+    //static variable for damage player can do (50 as default)
+    static int damage = 50;
+
+    //audio clips
+    [SerializeField] private AudioClip bulletShoot;
+    [SerializeField] private AudioClip bulletHit;
 
     public void Shoot(GameObject player)
     {
+        //set damage of bullet according to equation and wave***
+
+
         //set direction to fire to player rotation
         float directionToFire = player.GetComponent<PlayerMovement>().currentRotation ;
 
@@ -45,6 +54,10 @@ public class Bullet : MonoBehaviour
             GetComponent<Rigidbody2D>().AddForce(Vector2.right * speed * Time.deltaTime, ForceMode2D.Impulse);
         }
 
+        //Play shooting sound
+        GetComponent<AudioSource>().clip = bulletShoot;
+        GetComponent<AudioSource>().Play();
+
         //delete bullet after 1s
         Destroy(gameObject, 0.8f);
     }
@@ -55,8 +68,13 @@ public class Bullet : MonoBehaviour
         //if collision is with enemy
         if(collision.CompareTag("Enemy"))
         {
-            //deal damage function to enemy health script
+            collision.gameObject.GetComponent<EnemyHealth>().Damage(damage);
+
+            //Play target HIT sound
+            GetComponent<AudioSource>().clip = bulletHit;
+            GetComponent<AudioSource>().Play();
         }
+        //destroy the bullet
         Destroy(gameObject);
     }
 }
