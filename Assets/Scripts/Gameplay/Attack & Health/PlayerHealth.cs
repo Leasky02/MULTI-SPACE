@@ -23,7 +23,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float currentHealth;
     // % of health to be healed every second
-    [SerializeField]private float repairRate;
+    private float repairRate = 3;
+    //variable to prevent player taking damage multiple times in one frame
+    private bool receiveDamage = true;
 
     //a player has low health
     static bool lowHealth;
@@ -41,34 +43,41 @@ public class PlayerHealth : MonoBehaviour
     //called when attacked
     public void Damage(float damage)
     {
-        //take damage away from current health
-        currentHealth -= damage;
-        
-        //if player loses all health
-        if(currentHealth <= 0)
+        if(receiveDamage)
         {
-            currentHealth = 0;
-            Die();
-        }
-        //if health is less than 20% of max
-        if(currentHealth <= (maxHealth / 100) * 20)
-        {
-            lowHealth = true;
-            //turn health bar red
-            healthBar_FILL.color = red;
+            //prevent player from receiving damage again
+            receiveDamage = false;
+            Invoke("AllowReceiveDamage", 0.5f);
 
-            //turn up heartbeat
-            desiredVolume =1f;
-        }
+            //take damage away from current health
+            currentHealth -= damage;
 
-        //update health bar
-        healthBar.value = currentHealth;
+            //if player loses all health
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
+                Die();
+            }
+            //if health is less than 20% of max
+            if (currentHealth <= (maxHealth / 100) * 20)
+            {
+                lowHealth = true;
+                //turn health bar red
+                healthBar_FILL.color = red;
 
-        //play damage audio clip with random pitch
-        if(!GetComponent<AudioSource>().isPlaying)
-        {
-            GetComponent<AudioSource>().pitch = Random.Range(0.8f, 1.2f);
-            GetComponent<AudioSource>().Play();
+                //turn up heartbeat
+                desiredVolume = 1f;
+            }
+
+            //update health bar
+            healthBar.value = currentHealth;
+
+            //play damage audio clip with random pitch
+            if (!GetComponent<AudioSource>().isPlaying)
+            {
+                GetComponent<AudioSource>().pitch = Random.Range(0.8f, 1.2f);
+                GetComponent<AudioSource>().Play();
+            }
         }
     }
     //called to heal player
@@ -103,6 +112,11 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
 
+    }
+
+    private void AllowReceiveDamage()
+    {
+        receiveDamage = true;
     }
 
     //called every frame

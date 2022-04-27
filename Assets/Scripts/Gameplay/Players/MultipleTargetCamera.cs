@@ -33,8 +33,7 @@ public class MultipleTargetCamera : MonoBehaviour
         //if there is only 1 player
         if(MultiplayerManager.playerCount == 1)
         {
-            //remove / destroy player 2
-            Destroy(targets[1].gameObject);
+            //remove player 2
             targets.Remove(targets[1]);
         }
     }

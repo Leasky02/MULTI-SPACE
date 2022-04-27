@@ -57,9 +57,6 @@ public class Bullet : MonoBehaviour
         //Play shooting sound
         GetComponent<AudioSource>().clip = bulletShoot;
         GetComponent<AudioSource>().Play();
-
-        //delete bullet after 1s
-        Destroy(gameObject, 0.8f);
     }
 
     //when the bullet collides with something
@@ -74,7 +71,10 @@ public class Bullet : MonoBehaviour
             GetComponent<AudioSource>().clip = bulletHit;
             GetComponent<AudioSource>().Play();
         }
-        //destroy the bullet
-        Destroy(gameObject);
+        //remove bullet
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<BoxCollider2D>().enabled = false;
+        Destroy(gameObject, 1f);
+
     }
 }

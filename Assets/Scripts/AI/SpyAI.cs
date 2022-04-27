@@ -8,7 +8,8 @@ public class SpyAI : MonoBehaviour
     //target to follow
     [SerializeField] private Transform target;
     //speed to move
-    [SerializeField] private float speed = 200f;
+    [SerializeField] private float speed;
+    //cutting corners
     [SerializeField] private float nextWaypointDistance = 3f;
     //path variables
     private Path path;
@@ -32,7 +33,11 @@ public class SpyAI : MonoBehaviour
     void Start()
     {
         //set attackDamage according to equation and wave***
-        
+
+        //set speed variation randomly
+        speed = Random.Range(speed - 100, speed + 100);
+        //set nextWayPointDistance variation randomly
+        nextWaypointDistance = Random.Range(nextWaypointDistance - 0.5f, nextWaypointDistance + 2f);
         //set component variables
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();

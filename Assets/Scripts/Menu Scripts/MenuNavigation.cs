@@ -28,7 +28,6 @@ public class MenuNavigation : MonoBehaviour
         //lerp the roation to the desired rotation
         Quaternion currentRotation = menuContainer.transform.rotation;
         Quaternion wantedRotation = Quaternion.Euler(0, rotation_Y , 0);
-        Debug.Log(wantedRotation);
 
         menuContainer.transform.rotation = Quaternion.RotateTowards(currentRotation, wantedRotation, Time.deltaTime * rotationSpeed);
     }
