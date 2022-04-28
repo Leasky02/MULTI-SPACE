@@ -5,8 +5,16 @@ using Pathfinding;
 
 public class CommanderAI : MonoBehaviour
 {
+    /// <summary>
+    /// The Commander will look for the closest player and lock onto them. When they get low on health they will proceed to
+    /// find a random point in the map that is not within a certain radius to the player and move towards it (run away). Only
+    /// once their health is higher will they go back in to fight.
+    /// </summary>
+    
     //target to follow
     [SerializeField] private Transform target;
+    //potential targets
+    private GameObject[] players;
     //speed to move
     [SerializeField] private float speed;
     [SerializeField] private float nextWaypointDistance;
@@ -16,23 +24,24 @@ public class CommanderAI : MonoBehaviour
     private bool reachedEndOfPath = false;
 
     //A* asset scripts
-    private Seeker seeker;
-    private Rigidbody2D rb;
+    [SerializeField] private Seeker seeker;
+    [SerializeField] private Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
         //set attackDamage according to equation and wave***
 
+        //set players
+        players = GameObject.FindGameObjectsWithTag("Player");
+
         //set speed variation randomly
         speed = Random.Range(speed - 100 , speed + 100);
         //set nextWayPointDistance variation randomly
         nextWaypointDistance = Random.Range(nextWaypointDistance - 0.2f, nextWaypointDistance + 0.5f);
-        //set component variables
-        seeker = GetComponent<Seeker>();
-        rb = GetComponent<Rigidbody2D>();
-        //start generating path repeatedly
-        InvokeRepeating("UpdatePath", 0f, 0.5f);
+
+        //start generating path repeatedly (slight random start point to make enemies not pathfind simultaneously)
+        InvokeRepeating("UpdatePath", Random.Range(0f, 1f), 1f);
     }
     //called when path is complete
     void OnPathComplete(Path p)
@@ -48,9 +57,24 @@ public class CommanderAI : MonoBehaviour
     //upate the path to follow
     void UpdatePath()
     {
-        //check which player is closer and update target to closest player
+        //update target
+        //set shortestDistance to high value
+        float shortestDistance = 1000f;
+        //get shortest distance
+        for (int i = 0; i < players.Length; i++)
+        {
+            //get distance between a player and self
+            float distance = Vector2.Distance(players[i].transform.position, transform.position);
+            //if distance is shortest one so far
+            if (distance < shortestDistance)
+            {
+                shortestDistance = distance;
+                //set player to target
+                target = players[i].transform;
+            }
+        }
 
-        //create path
+        //update path
         seeker.StartPath(rb.position, target.position, OnPathComplete);
     }
 

@@ -5,9 +5,14 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     //health variables
+    [SerializeField] private int startingMaxHealth;
     [SerializeField] private int maxHealth;
     [SerializeField] private int currentHealth;
     [SerializeField] private bool dead;
+
+    //should enemy be able to regenerate?
+    [SerializeField] private bool regenerate;
+    [SerializeField] private int healingRate;
 
     //target that enemy is chasing
     [SerializeField] private Transform target;
@@ -33,8 +38,11 @@ public class EnemyHealth : MonoBehaviour
 
         //spawn rate will be handled in the wave manager***
 
-
+        //set health to max
         currentHealth = maxHealth;
+
+        if (regenerate)
+            InvokeRepeating("Heal", 1f, 1f);
     }
 
     private void Update()
@@ -71,6 +79,16 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
+    public void Heal()
+    {
+        currentHealth += healingRate;
+        //if health is already max
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+    }
+
     private void Die()
     {
         dead = true;
@@ -78,7 +96,7 @@ public class EnemyHealth : MonoBehaviour
         //stop rendering alien GFX
         gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
         //remove collider
-        GetComponent<PolygonCollider2D>().enabled = false;
+        GetComponent<CapsuleCollider2D>().enabled = false;
         //play death sound
         GetComponent<AudioSource>().Play();
         //play death particles

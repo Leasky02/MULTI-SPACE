@@ -185,9 +185,6 @@ public class DimensionalShift : MonoBehaviour
         active_TXT.gameObject.SetActive(true);
         seconds_TXT.gameObject.SetActive(true);
         ready_TXT.gameObject.SetActive(false);
-
-        //play ticking sound
-        cooldownContainer_OBJ.GetComponent<AudioSource>().Play();
     }
 
     private void MoveTo2D()

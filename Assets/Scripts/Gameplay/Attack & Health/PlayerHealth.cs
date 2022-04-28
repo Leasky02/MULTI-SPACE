@@ -28,17 +28,12 @@ public class PlayerHealth : MonoBehaviour
     //variable to prevent player taking damage multiple times in one frame
     private bool receiveDamage = true;
 
-    //a player has low health
-    static bool lowHealth;
-
     // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("Heal", 1f, 1f);
         //set health bar
         healthBar.value = currentHealth;
-        //set low health to false
-        lowHealth = false;
     }
 
     //called when attacked
@@ -62,7 +57,6 @@ public class PlayerHealth : MonoBehaviour
             //if health is less than 20% of max
             if (currentHealth <= (maxHealth / 100) * 20)
             {
-                lowHealth = true;
                 //turn health bar red
                 healthBar_FILL.color = red;
 
@@ -100,7 +94,6 @@ public class PlayerHealth : MonoBehaviour
         //if health is less than 20% of max
         if (currentHealth > (maxHealth / 100) * 20)
         {
-            lowHealth = false;
             //turn health bar green
             healthBar_FILL.color = green;
 
