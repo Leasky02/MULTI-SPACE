@@ -7,7 +7,7 @@ public class EnemyHealth : MonoBehaviour
     //health variables
     [SerializeField] private int startingMaxHealth;
     [SerializeField] private int maxHealth;
-    [SerializeField] private int currentHealth;
+    public int currentHealth;
     [SerializeField] private bool dead;
 
     //should enemy be able to regenerate?

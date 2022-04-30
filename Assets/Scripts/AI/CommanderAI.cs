@@ -13,18 +13,26 @@ public class CommanderAI : MonoBehaviour
     
     //target to follow
     [SerializeField] private Transform target;
+    //retreat position to go to
+    Vector2 retreatPosition;
     //potential targets
     private GameObject[] players;
     //speed to move
     [SerializeField] private float speed;
+    [SerializeField] private float retreatSpeedMultiplier = 1f;
     [SerializeField] private float nextWaypointDistance;
     //path variables
     private Path path;
     private int currentWayPoint = 0;
     private bool reachedEndOfPath = false;
+    private bool followingRetreatPath = false;
+    //if player has low health
+    private bool lowHealth = false;
+    [SerializeField] private int lowHealthValue;
 
     //A* asset scripts
     [SerializeField] private Seeker seeker;
+    [SerializeField] private EnemyHealth healthScript;
     [SerializeField] private Rigidbody2D rb;
 
     // Start is called before the first frame update
@@ -57,25 +65,77 @@ public class CommanderAI : MonoBehaviour
     //upate the path to follow
     void UpdatePath()
     {
+        //get health of enemy
+        if(healthScript.currentHealth < lowHealthValue)
+        {
+            lowHealth = true;
+        }
+        else
+        {
+            lowHealth = false;
+        }
+
         //update target
         //set shortestDistance to high value
         float shortestDistance = 1000f;
-        //get shortest distance
-        for (int i = 0; i < players.Length; i++)
+
+        //if enemy doesnt have low health, move to player
+        if(!lowHealth)
         {
-            //get distance between a player and self
-            float distance = Vector2.Distance(players[i].transform.position, transform.position);
-            //if distance is shortest one so far
-            if (distance < shortestDistance)
+            followingRetreatPath = false;
+
+            //get shortest distance
+            for (int i = 0; i < players.Length; i++)
             {
-                shortestDistance = distance;
-                //set player to target
-                target = players[i].transform;
+                //get distance between a player and self
+                float distance = Vector2.Distance(players[i].transform.position, transform.position);
+                //if distance is shortest one so far
+                if (distance < shortestDistance)
+                {
+                    shortestDistance = distance;
+                    //set player to target
+                    target = players[i].transform;
+                }
+            }
+            //decrease speed of enemy while running away
+            retreatSpeedMultiplier = 1f;
+            //update path with player position
+            seeker.StartPath(rb.position, target.position, OnPathComplete);
+        }
+        //if enemy does have low health
+        else
+        {
+            //check if it has reached the retreat position yet before going to the next one
+            if(Vector2.Distance(retreatPosition , transform.position) < 10f)
+            {
+                followingRetreatPath = false;
+            }
+
+            //if enemy has reached its retreat point
+            if(!followingRetreatPath)
+            {
+                //create multiple positions and pick furthest frmo player to move to
+                Vector2[] retreatPositionOptions = new Vector2[5];
+                float playerDistance = 0f;
+
+                for (int i = 0; i < retreatPositionOptions.Length; i++)
+                {
+                    //set position of position choice
+                    retreatPositionOptions[i] = new Vector2(Random.Range(-40f, 40f), Random.Range(-40f, 40f));
+                    //check against longest length
+                    if (Vector2.Distance(retreatPositionOptions[i], target.position) > playerDistance)
+                    {
+                        //if current location is longest yet then set it as location to go to
+                        retreatPosition = retreatPositionOptions[i];
+                    }
+                }
+                followingRetreatPath = true;
+                //increase speed of enemy while running away
+                retreatSpeedMultiplier = 1.5f;
+                //update path with retreat position
+                seeker.StartPath(rb.position, retreatPosition, OnPathComplete);
             }
         }
-
-        //update path
-        seeker.StartPath(rb.position, target.position, OnPathComplete);
     }
 
     // Update is called once per frame
@@ -102,7 +162,7 @@ public class CommanderAI : MonoBehaviour
         Vector2 force = direction * speed * Time.deltaTime;
 
         //add force to rigidbody
-        rb.AddForce(force);
+        rb.AddForce(force * retreatSpeedMultiplier);
 
         //distance to next way point
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWayPoint]);

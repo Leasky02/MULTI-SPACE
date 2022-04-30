@@ -67,8 +67,6 @@ public class SpyAI : MonoBehaviour
         //set shortestDistance to high value
         float shortestDistance = 1000f;
 
-
-
         //get shortest distance
         for(int i = 0; i < players.Length; i++)
         {
@@ -88,8 +86,6 @@ public class SpyAI : MonoBehaviour
             }
         }
 
-
-
         //if enemy is within range of the player
         if(Vector2.Distance(target.position, rb.position) < 8f)
         {
@@ -105,7 +101,7 @@ public class SpyAI : MonoBehaviour
             speedMultiplier = 1f;
         }
 
-        //if enemy isn't to follow the fofset (not close enough)
+        //if enemy isn't to follow the offset (not close enough)
         if (!followingOffset)
         {
             //update path
@@ -143,6 +139,10 @@ public class SpyAI : MonoBehaviour
         {
             reachedEndOfPath = false;
         }
+        //prevent it being 0 (ERROR)
+        if (currentWayPoint == 0)
+            currentWayPoint = 1;
+
         //gives vector direction to next waypoint
         Vector2 direction = ((Vector2)path.vectorPath[currentWayPoint] - rb.position).normalized;
         //move object along path in direction calculated above
