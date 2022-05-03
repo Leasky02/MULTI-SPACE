@@ -19,6 +19,25 @@ public class PlayerHealth : MonoBehaviour
 
     //playerID
     [SerializeField] private int playerID;
+    //dead players array
+    public static List<GameObject> deadPlayers;
+    //camera reference to remove player from view
+    [SerializeField] private Camera myCam;
+    //UI elements
+    [SerializeField] private Text nameDisplay;
+    [SerializeField] private GameObject healthContainer;
+    //colour to set DEAD UI text as
+    [SerializeField] private Color deadColour;
+    [SerializeField] private Color playerColour;
+    //3D object
+    [SerializeField] private GameObject object_3D;
+    //audio source for death/revive sound
+    [SerializeField] private AudioSource deathPlayer;
+    //audio clips
+    [SerializeField] private AudioClip die_clip;
+    [SerializeField] private AudioClip revive_clip;
+    //particles for death
+    [SerializeField] private ParticleSystem myParticles;
 
     //health values
     [SerializeField] private float maxHealth = 100f;
@@ -28,9 +47,13 @@ public class PlayerHealth : MonoBehaviour
     //variable to prevent player taking damage multiple times in one frame
     private bool receiveDamage = true;
 
+    [HideInInspector] public bool dead = false;
+    public static bool oneRemaining = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        deadPlayers = new List<GameObject>();
         InvokeRepeating("Heal", 1f, 1f);
         //set health bar
         healthBar.value = currentHealth;
@@ -39,7 +62,7 @@ public class PlayerHealth : MonoBehaviour
     //called when attacked
     public void Damage(float damage)
     {
-        if(receiveDamage)
+        if(receiveDamage && !dead)
         {
             //prevent player from receiving damage again
             receiveDamage = false;
@@ -49,7 +72,7 @@ public class PlayerHealth : MonoBehaviour
             currentHealth -= damage;
 
             //if player loses all health
-            if (currentHealth <= 0)
+            if (currentHealth <= 0 && !dead)
             {
                 currentHealth = 0;
                 Die();
@@ -75,6 +98,9 @@ public class PlayerHealth : MonoBehaviour
             {
                 GetComponent<AudioSource>().pitch = Random.Range(0.8f, 1.2f);
                 GetComponent<AudioSource>().Play();
+
+                //play damage animation
+                gameObject.GetComponent<Animator>().Play("SpriteDamage");
             }
         }
     }
@@ -108,7 +134,68 @@ public class PlayerHealth : MonoBehaviour
     //called when player dies
     private void Die()
     {
+        //if one of players isn't already dead
+        if (!oneRemaining)
+        {
+            oneRemaining = true;
+            dead = true;
+            //add this object to list of dead players
+            deadPlayers.Add(gameObject);
+            //remove this player as a camera target
+            myCam.GetComponent<MultipleTargetCamera>().RemoveTarget(playerID - 1);
 
+            //set UI elemnts
+            nameDisplay.color = deadColour;
+
+            //Disable components
+            gameObject.GetComponent<PlayerMovement>().enabled = false;
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            gameObject.GetComponent<Gun>().enabled = false;
+            gameObject.GetComponent<AudioSource>().enabled = false;
+            object_3D.SetActive(false);
+            //Disable UI
+            healthContainer.SetActive(false);
+            //play death sound audio
+            deathPlayer.clip = die_clip;
+            deathPlayer.Play();
+            //play death particles
+            myParticles.Play();
+        }
+        else
+        {
+            //game over
+            Debug.Log("Game Over");
+        }
+    }
+
+    public void Revive()
+    {
+        oneRemaining = false;
+        dead = false;
+        //add this object to list of dead players
+        deadPlayers.Remove(gameObject);
+        //remove this player as a camera target
+        myCam.GetComponent<MultipleTargetCamera>().AddTarget(gameObject);
+
+        //set UI elemnts
+        nameDisplay.color = playerColour;
+
+        //Enable components
+        gameObject.GetComponent<PlayerMovement>().enabled = true;
+        if(!DimensionalShift.is3D)
+            gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        gameObject.GetComponent<Gun>().enabled = true;
+        gameObject.GetComponent<AudioSource>().enabled = true;
+        object_3D.SetActive(true);
+
+        //Enable UI
+        healthContainer.SetActive(true);
+        //play revive sound audio
+        deathPlayer.clip = revive_clip;
+        deathPlayer.Play();
+
+        //reset health
+        currentHealth = maxHealth;
     }
 
     private void AllowReceiveDamage()

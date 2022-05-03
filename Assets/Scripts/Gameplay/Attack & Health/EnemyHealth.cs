@@ -47,15 +47,18 @@ public class EnemyHealth : MonoBehaviour
 
     private void Update()
     {
-        //if player is within reach and can deal damage and enemy isn't dead
-        if (doDamage && Vector3.Distance(target.transform.position, gameObject.transform.position) < attackDistance && !dead)
+        if(target != null)
         {
-            //do damage to player
-            target.gameObject.GetComponent<PlayerHealth>().Damage(attackDamage);
-            //prevent damage
-            doDamage = false;
-            //cue damage reactivate
-            Invoke("AllowDamage", attackCooldown);
+            //if player is within reach and can deal damage and enemy isn't dead
+            if (doDamage && Vector3.Distance(target.transform.position, gameObject.transform.position) < attackDistance && !dead)
+            {
+                //do damage to player
+                target.gameObject.GetComponent<PlayerHealth>().Damage(attackDamage);
+                //prevent damage
+                doDamage = false;
+                //cue damage reactivate
+                Invoke("AllowDamage", attackCooldown);
+            }
         }
     }
     //set target to AI's target
@@ -99,11 +102,13 @@ public class EnemyHealth : MonoBehaviour
         GetComponent<CapsuleCollider2D>().enabled = false;
         //play death sound
         GetComponent<AudioSource>().Play();
+
+        //stop enemy moving
+        GetComponent<Rigidbody2D>().freezeRotation = true;
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+
         //play death particles
         gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
-        //stop enemy moving
-        GetComponent<Rigidbody2D>().isKinematic = true;
-        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
 
         //destroy itself
         Destroy(gameObject , 2f);

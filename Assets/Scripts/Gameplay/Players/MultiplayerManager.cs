@@ -22,6 +22,7 @@ public class MultiplayerManager : MonoBehaviour
             {
                 Destroy(objectsToRemove[i]);
             }
+            PlayerHealth.oneRemaining = true;
         }
     }
 }

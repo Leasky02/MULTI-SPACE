@@ -60,8 +60,8 @@ public class DimensionalShift : MonoBehaviour
         }
 
 
-        //if player presses dimenional shift button
-        if(Input.GetButtonDown("DimensionalShift"))
+        //if player1 presses dimenional shift button and isn't dead
+        if(Input.GetButtonDown("DimensionalShift1") && !player1_2D.gameObject.GetComponent<PlayerHealth>().dead)
         {
             //if player is already in 3D
             if(is3D)
@@ -72,6 +72,21 @@ public class DimensionalShift : MonoBehaviour
             {
                 //if the cooldown is inactive
                 if(!cooldownTimer)
+                    MoveTo3D();
+            }
+        }
+        //if player2 presses dimenional shift button and isn't dead
+        if (Input.GetButtonDown("DimensionalShift2") && !player2_2D.gameObject.GetComponent<PlayerHealth>().dead)
+        {
+            //if player is already in 3D
+            if (is3D)
+            {
+                MoveTo2D();
+            }
+            else
+            {
+                //if the cooldown is inactive
+                if (!cooldownTimer)
                     MoveTo3D();
             }
         }
@@ -133,19 +148,19 @@ public class DimensionalShift : MonoBehaviour
 
     private void MoveTo3D()
     {
-        //set 2D sprite invisible
-        player1_2D.enabled = false;
-        //IF player 2 exists
-        if(MultiplayerManager.playerCount == 2)
+        //if p;ayer one isn't dead
+        if(!player1_2D.gameObject.GetComponent<PlayerHealth>().dead)
         {
-            player2_2D.enabled = false;
+            //set 2D sprite invisible
+            player1_2D.enabled = false;
+            //position 3D characters
+            player1_3D.transform.position = new Vector3(player1_3D.transform.position.x, player1_3D.transform.position.y, -0.2f);
         }
 
-        //position 3D characters
-        player1_3D.transform.position = new Vector3(player1_3D.transform.position.x , player1_3D.transform.position.y, -0.2f);
-        //IF player 2 exists
-        if (MultiplayerManager.playerCount == 2)
+        //IF player 2 exists AND isn't dead
+        if (MultiplayerManager.playerCount == 2 && !player2_2D.gameObject.GetComponent<PlayerHealth>().dead)
         {
+            player2_2D.enabled = false;
             player2_3D.transform.position = new Vector3(player2_3D.transform.position.x, player2_3D.transform.position.y, -0.2f);
 
             //set the Y coordinate offset of camera
@@ -189,20 +204,19 @@ public class DimensionalShift : MonoBehaviour
 
     private void MoveTo2D()
     {
-        //set 2D sprite visible
-        player1_2D.enabled = true;
+        //if player 1 isnt dead
+        if(!player1_2D.gameObject.GetComponent<PlayerHealth>().dead)
+        {
+            //set 2D sprite visible
+            player1_2D.enabled = true;
+            //position 3D characters out fo view of camera
+            player1_3D.transform.position = new Vector3(player1_3D.transform.position.x, player1_3D.transform.position.y, -50.0f);
+        }
 
-        //IF player 2 exists
-        if (MultiplayerManager.playerCount == 2)
+        //IF player 2 exists AND isnt dead
+        if (MultiplayerManager.playerCount == 2 && !player2_2D.gameObject.GetComponent<PlayerHealth>().dead)
         {
             player2_2D.enabled = true;
-        }
-        //position 3D characters out fo view of camera
-        player1_3D.transform.position = new Vector3(player1_3D.transform.position.x, player1_3D.transform.position.y, -50.0f);
-
-        //IF player 2 exists
-        if(MultiplayerManager.playerCount == 2)
-        {
             player2_3D.transform.position = new Vector3(player2_3D.transform.position.x, player2_3D.transform.position.y, -50.0f);
         }
 

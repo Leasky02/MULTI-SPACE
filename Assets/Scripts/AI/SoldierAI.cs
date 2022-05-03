@@ -61,14 +61,17 @@ public class SoldierAI : MonoBehaviour
         //get shortest distance
         for (int i = 0; i < players.Length; i++)
         {
-            //get distance between a player and self
-            float distance = Vector2.Distance(players[i].transform.position, transform.position);
-            //if distance is shortest one so far
-            if (distance < shortestDistance)
+            if(!players[i].GetComponent<PlayerHealth>().dead)
             {
-                shortestDistance = distance;
-                //set player to target
-                target = players[i].transform;
+                //get distance between a player and self
+                float distance = Vector2.Distance(players[i].transform.position, transform.position);
+                //if distance is shortest one so far
+                if (distance < shortestDistance)
+                {
+                    shortestDistance = distance;
+                    //set player to target
+                    target = players[i].transform;
+                }
             }
         }
         
@@ -79,8 +82,12 @@ public class SoldierAI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //set target of AI's health script to current target
-        GetComponent<EnemyHealth>().SetTarget(target);
+        //if there is a target
+        if (target != null)
+        {
+            //set target of AI's health script to current target
+            GetComponent<EnemyHealth>().SetTarget(target);
+        }
 
         if (path == null)
             return;

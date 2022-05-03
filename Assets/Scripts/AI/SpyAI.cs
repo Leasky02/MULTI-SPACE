@@ -27,7 +27,6 @@ public class SpyAI : MonoBehaviour
     private int currentWayPoint = 0;
     private bool reachedEndOfPath = false;
     private bool followingOffset = false;
-    private bool offsetPathReached = false;
 
     //A* asset script
     [SerializeField] private Seeker seeker;
@@ -67,16 +66,15 @@ public class SpyAI : MonoBehaviour
         //set shortestDistance to high value
         float shortestDistance = 1000f;
 
-        //get shortest distance
+        //get shortest distance of living players
         for(int i = 0; i < players.Length; i++)
         {
             //get distance between a player and self
-            float distance = Vector2.Distance(players[i].transform.position, rb.position);
-            //if distance is shortest one so far
-            if (distance < shortestDistance)
+            if(!players[i].GetComponent<PlayerHealth>().dead)
             {
-                //if the enemy is NOT already darting aroiund another player
-                if(!followingOffset)
+                float distance = Vector2.Distance(players[i].transform.position, rb.position);
+                //if distance is shortest one so far
+                if (distance < shortestDistance)
                 {
                     //lock onto another player
                     shortestDistance = distance;
@@ -90,7 +88,7 @@ public class SpyAI : MonoBehaviour
         if(Vector2.Distance(target.position, rb.position) < 8f)
         {
             //multiply speed
-            speedMultiplier = 2.5f;
+            speedMultiplier = 1.5f;
             //tell enemy to start following offset
             followingOffset = true;
         }
@@ -124,8 +122,12 @@ public class SpyAI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //set target of AI's health script to current target
-        GetComponent<EnemyHealth>().SetTarget(target);
+        //if there is a target
+        if (target != null)
+        {
+            //set target of AI's health script to current target
+            GetComponent<EnemyHealth>().SetTarget(target);
+        }
 
         if (path == null)
             return;
@@ -139,9 +141,6 @@ public class SpyAI : MonoBehaviour
         {
             reachedEndOfPath = false;
         }
-        //prevent it being 0 (ERROR)
-        if (currentWayPoint == 0)
-            currentWayPoint = 1;
 
         //gives vector direction to next waypoint
         Vector2 direction = ((Vector2)path.vectorPath[currentWayPoint] - rb.position).normalized;

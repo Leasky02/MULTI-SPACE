@@ -107,4 +107,16 @@ public class MultipleTargetCamera : MonoBehaviour
         //return center point of bounds
         return bounds.center;
     }
+
+    public void RemoveTarget(int playerID)
+    {
+        //only remove a player if there is more than 1
+        if(targets.Count > 1)
+            targets.Remove(targets[playerID]);
+    }
+
+    public void AddTarget(GameObject newTarget)
+    {
+        targets.Add(newTarget.transform);
+    }
 }
