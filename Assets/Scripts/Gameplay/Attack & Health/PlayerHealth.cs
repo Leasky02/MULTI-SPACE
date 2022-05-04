@@ -206,6 +206,34 @@ public class PlayerHealth : MonoBehaviour
 
         //update health bar
         healthBar.value = currentHealth;
+
+        //take care of 3D / 2D characters
+        if (DimensionalShift.is3D)
+        {
+            if(playerID == 1)
+            {
+                DimensionalShift.player1_2D.enabled = false;
+                DimensionalShift.player1_3D.transform.position = new Vector3(DimensionalShift.player1_3D.transform.position.x, DimensionalShift.player1_3D.transform.position.y, -0.2f);
+            }
+            if (playerID == 2)
+            {
+                DimensionalShift.player2_2D.enabled = false;
+                DimensionalShift.player2_3D.transform.position = new Vector3(DimensionalShift.player2_3D.transform.position.x, DimensionalShift.player2_3D.transform.position.y, -0.2f);
+            }
+        }
+        else
+        {
+            if (playerID == 1)
+            {
+                DimensionalShift.player1_2D.enabled = true;
+                DimensionalShift.player1_3D.transform.position = new Vector3(DimensionalShift.player1_3D.transform.position.x, DimensionalShift.player1_3D.transform.position.y, -50f);
+            }
+            if (playerID == 2)
+            {
+                DimensionalShift.player2_2D.enabled = true;
+                DimensionalShift.player2_3D.transform.position = new Vector3(DimensionalShift.player2_3D.transform.position.x, DimensionalShift.player2_3D.transform.position.y, -50f);
+            }
+        }
     }
 
 

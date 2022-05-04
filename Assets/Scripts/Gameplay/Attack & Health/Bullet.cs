@@ -14,9 +14,15 @@ public class Bullet : MonoBehaviour
     [SerializeField] private AudioClip bulletShoot;
     [SerializeField] private AudioClip bulletHit;
 
+    private void Start()
+    {
+        //set pitch of audio source
+        GetComponent<AudioSource>().pitch = Random.Range(0.8f, 1.5f);
+    }
+
     public void Shoot(GameObject player)
     {
-        //set damage of bullet according to equation and wave***
+        //set damage of bullet according to upgrade level
 
         //set direction to fire to player rotation
         float directionToFire = player.GetComponent<PlayerMovement>().currentRotation ;

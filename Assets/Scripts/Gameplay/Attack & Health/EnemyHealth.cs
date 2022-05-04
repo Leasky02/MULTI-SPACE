@@ -33,11 +33,12 @@ public class EnemyHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //max health = 10x + c , x = wave , c = starting health
-        maxHealth = 9 * WaveSystem.wave + startingMaxHealth;
+        //max health = 9x + c , x = wave , c = starting health
+        //set to something closer to 15 once i add in weapon upgrades
+        maxHealth = 9 * WaveSystem.wave-1 + startingMaxHealth;
 
         //set attackDamage according to equation Y=2X + C, X=wave , C= startingAttackdamage
-        attackDamage = 2 * WaveSystem.wave + startingAttackDamage;
+        attackDamage = 2 * WaveSystem.wave-1 + startingAttackDamage;
 
         //spawn rate will be handled in the wave manager***
 

@@ -9,13 +9,9 @@ public class CameraReplictor : MonoBehaviour
     /// </summary>
     /// 
     [SerializeField] private Camera myCam;
-    [SerializeField] private bool adjustDepth;
     // Update is called once per frame
     void FixedUpdate()
     {
         GetComponent<Camera>().fieldOfView = myCam.fieldOfView;
-
-        if(adjustDepth)
-            GetComponent<Camera>().depth = myCam.depth;
     }
 }

@@ -31,7 +31,7 @@ public class WaveSystem : MonoBehaviour
     {
         //if single player then make game slightly easier
         if (MultiplayerManager.playerCount == 1)
-            enemyMultiplier -= 1;
+            enemyMultiplier /= 2;
         //start first wave
         Invoke("NextWave", 1f);
 
@@ -78,7 +78,7 @@ public class WaveSystem : MonoBehaviour
         totalEnemiesToSpawn = (enemyMultiplier * wave) + startingEnemies;
 
         //pick random spawn locations
-        currentSpawnLocations = new Vector2[Random.Range(3 , 6)];
+        currentSpawnLocations = new Vector2[Random.Range(4 , 8)];
         
         for(int i = 0; i < currentSpawnLocations.Length; i++)
         {

@@ -7,13 +7,20 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class DimensionalShift : MonoBehaviour
 {
+    //2D reference players
+    [SerializeField] private SpriteRenderer player1_2D_Ref;
+    [SerializeField] private SpriteRenderer player2_2D_Ref;
+    //3D reference players
+    [SerializeField] private GameObject player1_3D_Ref;
+    [SerializeField] private GameObject player2_3D_Ref;
+
     //2D players
-    [SerializeField] private SpriteRenderer player1_2D;
-    [SerializeField] private SpriteRenderer player2_2D;
+    public static SpriteRenderer player1_2D;
+    public static SpriteRenderer player2_2D;
 
     //3D players
-    [SerializeField] private GameObject player1_3D;
-    [SerializeField] private GameObject player2_3D;
+    public static GameObject player1_3D;
+    public static GameObject player2_3D;
 
     //tilemaps
     [SerializeField] private GameObject innerTilemap;
@@ -47,6 +54,14 @@ public class DimensionalShift : MonoBehaviour
 
     //variable holding current dimensional state
     public static bool is3D = false;
+
+    private void Start()
+    {
+        player1_2D = player1_2D_Ref;
+        player2_2D = player2_2D_Ref;
+        player1_3D = player1_3D_Ref;
+        player2_3D = player2_3D_Ref;
+    }
 
     // Update is called once per frame
     void Update()
@@ -148,9 +163,6 @@ public class DimensionalShift : MonoBehaviour
 
     private void MoveTo3D()
     {
-        //render camera above others
-        cam.GetComponent<Camera>().depth = 1;
-
         //if player one isn't dead
         if(!player1_2D.gameObject.GetComponent<PlayerHealth>().dead)
         {
@@ -207,9 +219,6 @@ public class DimensionalShift : MonoBehaviour
 
     private void MoveTo2D()
     {
-        //render camera below others
-        cam.GetComponent<Camera>().depth = -1;
-
         //if player 1 isnt dead
         if (!player1_2D.gameObject.GetComponent<PlayerHealth>().dead)
         {

@@ -10,8 +10,6 @@ public class Gun : MonoBehaviour
     //static fire rate with default 1 to start with
     static float fireRate = 1.3f;
     private float nextTimeToFire = 0f;
-    //damage
-    [SerializeField] private int damage;
 
     //spawn position
     [SerializeField] private Transform bulletSpawnPosition;
