@@ -54,7 +54,7 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         deadPlayers = new List<GameObject>();
-        InvokeRepeating("Heal", 1f, 1f);
+        InvokeRepeating("Heal", 1f, 2f);
         //set health bar
         healthBar.value = currentHealth;
     }
@@ -137,6 +137,7 @@ public class PlayerHealth : MonoBehaviour
         //if one of players isn't already dead
         if (!oneRemaining)
         {
+            receiveDamage = false;
             oneRemaining = true;
             dead = true;
             //add this object to list of dead players
@@ -170,6 +171,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void Revive()
     {
+        receiveDamage = true;
         oneRemaining = false;
         dead = false;
         //add this object to list of dead players
@@ -196,7 +198,16 @@ public class PlayerHealth : MonoBehaviour
 
         //reset health
         currentHealth = maxHealth;
+        //turn health bar green
+        healthBar_FILL.color = green;
+
+        //turn down heartbeat
+        desiredVolume = 0f;
+
+        //update health bar
+        healthBar.value = currentHealth;
     }
+
 
     private void AllowReceiveDamage()
     {

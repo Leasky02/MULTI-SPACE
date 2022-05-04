@@ -8,7 +8,7 @@ public class WaveSystem : MonoBehaviour
     //Progression equation variables (Y = MX + C) , Y = 3x + 1
     [SerializeField] private int startingEnemies; //C
     [SerializeField] private int enemyMultiplier; //M
-    [SerializeField] private int wave; //X
+    public static int wave; //X
     [SerializeField] private int totalEnemiesToSpawn; //Y
 
     //alien prefabs
@@ -29,6 +29,9 @@ public class WaveSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //if single player then make game slightly easier
+        if (MultiplayerManager.playerCount == 1)
+            enemyMultiplier -= 1;
         //start first wave
         Invoke("NextWave", 1f);
 
@@ -75,7 +78,7 @@ public class WaveSystem : MonoBehaviour
         totalEnemiesToSpawn = (enemyMultiplier * wave) + startingEnemies;
 
         //pick random spawn locations
-        currentSpawnLocations = new Vector2[Random.Range(1 , 5)];
+        currentSpawnLocations = new Vector2[Random.Range(3 , 6)];
         
         for(int i = 0; i < currentSpawnLocations.Length; i++)
         {
@@ -83,12 +86,12 @@ public class WaveSystem : MonoBehaviour
         }
 
         //spawn first alien
-        Invoke("SpawnAlien", 1f);
+        Invoke("SpawnAlien", 0.5f);
 
         //change UI tet in half a second (in sync with animation)
         waveDisplay.gameObject.GetComponent<Animator>().Play("WaveTransition");
         //cue text change
-        Invoke("ChangeText", 0.5f);
+        Invoke("ChangeText", 0.2f);
 
         if (PlayerHealth.deadPlayers.Count > 0)
         {

@@ -148,7 +148,10 @@ public class DimensionalShift : MonoBehaviour
 
     private void MoveTo3D()
     {
-        //if p;ayer one isn't dead
+        //render camera above others
+        cam.GetComponent<Camera>().depth = 1;
+
+        //if player one isn't dead
         if(!player1_2D.gameObject.GetComponent<PlayerHealth>().dead)
         {
             //set 2D sprite invisible
@@ -204,8 +207,11 @@ public class DimensionalShift : MonoBehaviour
 
     private void MoveTo2D()
     {
+        //render camera below others
+        cam.GetComponent<Camera>().depth = -1;
+
         //if player 1 isnt dead
-        if(!player1_2D.gameObject.GetComponent<PlayerHealth>().dead)
+        if (!player1_2D.gameObject.GetComponent<PlayerHealth>().dead)
         {
             //set 2D sprite visible
             player1_2D.enabled = true;

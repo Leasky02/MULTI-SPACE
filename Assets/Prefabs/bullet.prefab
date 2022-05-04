@@ -4834,7 +4834,7 @@ Transform:
   m_GameObject: {fileID: 4316910054057212000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.0207, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.5, z: 0.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8872388763160807308}
   m_Father: {fileID: 0}
@@ -4925,18 +4925,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.006623149, y: -0.000036418438}
+  m_Offset: {x: 0.0010287017, y: -0.28351736}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.3, y: 1.8}
+    oldSize: {x: 0.78, y: 1.08}
     newSize: {x: 0.39, y: 0.54}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0009489, y: 0.993667}
+  m_Size: {x: 0.77139306, y: 1.0827773}
   m_EdgeRadius: 0
 --- !u!114 &6596439687802014675
 MonoBehaviour:
@@ -4950,7 +4950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1368d1d1fea895d408f5855f7933859a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8000
+  speed: 7000
   bulletShoot: {fileID: 8300000, guid: 6e84adf8258f10549922909e50083bd5, type: 3}
   bulletHit: {fileID: 8300000, guid: 0f9e3edffd93b8543922d54d364c4051, type: 3}
 --- !u!82 &1557187977392322284

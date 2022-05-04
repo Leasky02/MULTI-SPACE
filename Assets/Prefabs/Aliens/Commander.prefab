@@ -167,7 +167,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &3520294920783812736
 MonoBehaviour:
@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  speed: 600
+  speed: 750
   nextWaypointDistance: 2
   lowHealthValue: 60
   seeker: {fileID: 3520294920783812799}
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb4de0591d7bde49941576b8aa34b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingMaxHealth: 0
+  startingMaxHealth: 100
   maxHealth: 100
   currentHealth: 100
   dead: 0
@@ -211,6 +211,7 @@ MonoBehaviour:
   attackDistance: 3
   startingAttackDamage: 20
   attackDamage: 0
+  AI: {fileID: 3520294920783812736}
 --- !u!82 &3520294920783812794
 AudioSource:
   m_ObjectHideFlags: 0

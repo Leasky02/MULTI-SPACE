@@ -27,14 +27,17 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private int startingAttackDamage = 10;
     [SerializeField] private int attackDamage;
 
+    //alien type
+    [SerializeField] private MonoBehaviour AI;
+
     // Start is called before the first frame update
     void Start()
     {
-        //max health = wave equation***
+        //max health = 10x + c , x = wave , c = starting health
+        maxHealth = 9 * WaveSystem.wave + startingMaxHealth;
 
-
-        //set attackDamage according to equation and wave***
-        attackDamage = startingAttackDamage;
+        //set attackDamage according to equation Y=2X + C, X=wave , C= startingAttackdamage
+        attackDamage = 2 * WaveSystem.wave + startingAttackDamage;
 
         //spawn rate will be handled in the wave manager***
 
@@ -103,9 +106,11 @@ public class EnemyHealth : MonoBehaviour
         //play death sound
         GetComponent<AudioSource>().Play();
 
+        //disable pathfinding
+        AI.enabled = false;
         //stop enemy moving
-        GetComponent<Rigidbody2D>().freezeRotation = true;
         GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        GetComponent<Rigidbody2D>().freezeRotation = true;
 
         //play death particles
         gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Play();

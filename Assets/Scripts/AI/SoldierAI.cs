@@ -28,13 +28,15 @@ public class SoldierAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //set attackDamage according to equation and wave***
 
         //set players
         players = GameObject.FindGameObjectsWithTag("Player");
 
         //set speed variation randomly
         speed = Random.Range(speed - 100, speed + 100);
+        //set speed accodring to equation (subtle speed change)
+        speed += WaveSystem.wave * 10;
+
         //set nextWayPointDistance variation randomly
         nextWaypointDistance = Random.Range(nextWaypointDistance - 0.5f, nextWaypointDistance + 1f);
 
@@ -91,6 +93,7 @@ public class SoldierAI : MonoBehaviour
 
         if (path == null)
             return;
+        
         //if reached the end of the path
         if (currentWayPoint >= path.vectorPath.Count)
         {
@@ -101,7 +104,9 @@ public class SoldierAI : MonoBehaviour
         {
             reachedEndOfPath = false;
         }
+        
         //gives vector direction to next waypoint
+
         Vector2 direction = ((Vector2)path.vectorPath[currentWayPoint] - rb.position).normalized;
         //move object along path in direction calculated above
         Vector2 force = direction * speed * Time.deltaTime;
@@ -111,13 +116,16 @@ public class SoldierAI : MonoBehaviour
 
         //distance to next way point
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWayPoint]);
+
         //if reached next waypoint
-        if (distance < nextWaypointDistance)
+        if (distance < nextWaypointDistance && !reachedEndOfPath)
         {
             currentWayPoint++;
         }
 
         //set rotation
-        transform.rotation = Quaternion.LookRotation(Vector3.forward, rb.velocity);
+        Quaternion currentAngle = transform.rotation;
+        Quaternion newAngle = Quaternion.LookRotation(Vector3.forward, rb.velocity);
+        transform.rotation = Quaternion.RotateTowards(currentAngle, newAngle, Time.deltaTime * 500);
     }
 }

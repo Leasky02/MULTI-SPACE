@@ -5,7 +5,7 @@ using UnityEngine;
 public class MultiplayerManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] objectsToRemove;
-    public static int playerCount = 2;
+    public static int playerCount = 1;
     //set the player count
     public void PlayerCount(int players)
     {
