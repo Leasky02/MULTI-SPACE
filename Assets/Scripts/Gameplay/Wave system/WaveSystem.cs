@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class WaveSystem : MonoBehaviour
 {
-    //Progression equation variables (Y = MX + C) , Y = 3x + 1
+    //Progression equation variables (Y = MX + C) , Y = 6x + 1
     [SerializeField] private int startingEnemies; //C
     [SerializeField] private int enemyMultiplier; //M
     public static int wave; //X
@@ -31,7 +31,7 @@ public class WaveSystem : MonoBehaviour
     {
         //if single player then make game slightly easier
         if (MultiplayerManager.playerCount == 1)
-            enemyMultiplier /= 2;
+            enemyMultiplier -= 2;
         //start first wave
         Invoke("NextWave", 1f);
 
@@ -121,7 +121,7 @@ public class WaveSystem : MonoBehaviour
         if(totalEnemiesToSpawn > 0)
         {
             //call function again
-            Invoke("SpawnAlien", Random.Range(0.1f, 0.5f));
+            Invoke("SpawnAlien", Random.Range(0.2f, 0.5f));
         }
     }
 }

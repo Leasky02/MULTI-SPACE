@@ -36,6 +36,9 @@ public class DimensionalShift : MonoBehaviour
     //audio volume variable
     private float audioVolume = 0f;
 
+    //variable to prevent action being double pressed
+    private bool cooldownUse;
+
     //UI elements and colours
     [SerializeField] private GameObject cooldownContainer_OBJ;
     [SerializeField] private Text cooldown_TXT;
@@ -76,8 +79,12 @@ public class DimensionalShift : MonoBehaviour
 
 
         //if player1 presses dimenional shift button and isn't dead
-        if(Input.GetButtonDown("DimensionalShift1") && !player1_2D.gameObject.GetComponent<PlayerHealth>().dead)
+        if(Input.GetButtonDown("DimensionalShift1") && !player1_2D.gameObject.GetComponent<PlayerHealth>().dead && !cooldownUse)
         {
+            //prevent button being double pressed
+            cooldownUse = true;
+            Invoke("EndButtonCooldown", 1f);
+
             //if player is already in 3D
             if(is3D)
             {
@@ -91,8 +98,12 @@ public class DimensionalShift : MonoBehaviour
             }
         }
         //if player2 presses dimenional shift button and isn't dead
-        if (Input.GetButtonDown("DimensionalShift2") && !player2_2D.gameObject.GetComponent<PlayerHealth>().dead)
+        if (Input.GetButtonDown("DimensionalShift2") && !player2_2D.gameObject.GetComponent<PlayerHealth>().dead && !cooldownUse)
         {
+            //prevent button being double pressed
+            cooldownUse = true;
+            Invoke("EndButtonCooldown", 1f);
+
             //if player is already in 3D
             if (is3D)
             {
@@ -264,5 +275,10 @@ public class DimensionalShift : MonoBehaviour
         //set UI accordingly
         active_TXT.gameObject.SetActive(false);
         cooldown_TXT.gameObject.SetActive(true);
+    }
+
+   private void EndButtonCooldown()
+    {
+        cooldownUse = false;
     }
 }

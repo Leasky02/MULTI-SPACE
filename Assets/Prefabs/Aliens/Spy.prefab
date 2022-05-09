@@ -70,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -8
   m_Sprite: {fileID: 21300000, guid: 68531660b4d0a3a47bdb210624e01cea, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4901,6 +4901,7 @@ GameObject:
   - component: {fileID: 1423114297915005665}
   - component: {fileID: 1423114297915005664}
   - component: {fileID: 1423114297915005666}
+  - component: {fileID: 5824683379396939803}
   m_Layer: 9
   m_Name: Spy
   m_TagString: Enemy
@@ -5014,6 +5015,7 @@ MonoBehaviour:
   startingAttackDamage: 10
   attackDamage: 0
   AI: {fileID: 1423114297915005670}
+  pointOrb: {fileID: 2877807924915453457, guid: e9f328a1548cd244fb184e470d2004ef, type: 3}
 --- !u!82 &1423114297915005664
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5123,6 +5125,25 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.007935058, y: -0.08331246}
-  m_Size: {x: 2.7456217, y: 1.610975}
+  m_Offset: {x: -0.007935058, y: -0.08331276}
+  m_Size: {x: 2.7456222, y: 1.2429618}
   m_Direction: 1
+--- !u!95 &5824683379396939803
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423114297915005671}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 34a2526af5108404590b7dbc1c1dd23f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

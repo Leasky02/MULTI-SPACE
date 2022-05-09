@@ -174,10 +174,10 @@ public class PlayerHealth : MonoBehaviour
         receiveDamage = true;
         oneRemaining = false;
         dead = false;
-        //add this object to list of dead players
+        //remove this object to list of dead players
         deadPlayers.Remove(gameObject);
-        //remove this player as a camera target
-        myCam.GetComponent<MultipleTargetCamera>().AddTarget(gameObject);
+        //add this player as a camera target
+        myCam.GetComponent<MultipleTargetCamera>().ResetTarget();
 
         //set UI elemnts
         nameDisplay.color = playerColour;

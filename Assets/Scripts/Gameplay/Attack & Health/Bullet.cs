@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     //speed of bullet
     [SerializeField] private int speed;
     //static variable for damage player can do (50 as default)
-    static int damage = 50;
+    public static int damage = 50;
     //bullet been used already?
     private bool used = false;
     //audio clips

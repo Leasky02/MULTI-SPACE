@@ -30,12 +30,15 @@ public class EnemyHealth : MonoBehaviour
     //alien type
     [SerializeField] private MonoBehaviour AI;
 
+    //pointOrb Prefab
+    [SerializeField] private GameObject pointOrb;
+
     // Start is called before the first frame update
     void Start()
     {
         //max health = 9x + c , x = wave , c = starting health
         //set to something closer to 15 once i add in weapon upgrades
-        maxHealth = 9 * WaveSystem.wave-1 + startingMaxHealth;
+        maxHealth = 15 * WaveSystem.wave-1 + startingMaxHealth;
 
         //set attackDamage according to equation Y=2X + C, X=wave , C= startingAttackdamage
         attackDamage = 2 * WaveSystem.wave-1 + startingAttackDamage;
@@ -118,5 +121,13 @@ public class EnemyHealth : MonoBehaviour
 
         //destroy itself
         Destroy(gameObject , 2f);
+
+        //potentially create Point Orb (1/3)
+        int spawnChance = Random.Range(1, 4);
+
+        if (spawnChance == 3)
+        {
+            Instantiate(pointOrb, gameObject.transform.position, Quaternion.identity);
+        }
     }
 }

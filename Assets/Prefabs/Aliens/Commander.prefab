@@ -70,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -3
+  m_SortingOrder: -10
   m_Sprite: {fileID: 21300000, guid: b86a58e149dfa8c4aaf01e0a615cf95e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 3520294920783812795}
   - component: {fileID: 3520294920783812794}
   - component: {fileID: 3520294920783812796}
+  - component: {fileID: 7401819073317834803}
   m_Layer: 9
   m_Name: Commander
   m_TagString: Enemy
@@ -212,6 +213,7 @@ MonoBehaviour:
   startingAttackDamage: 20
   attackDamage: 0
   AI: {fileID: 3520294920783812736}
+  pointOrb: {fileID: 2877807924915453457, guid: e9f328a1548cd244fb184e470d2004ef, type: 3}
 --- !u!82 &3520294920783812794
 AudioSource:
   m_ObjectHideFlags: 0
@@ -321,9 +323,28 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.042206798, y: -0.24121311}
-  m_Size: {x: 4.726779, y: 2.712647}
+  m_Offset: {x: -0.04220679, y: -0.1709914}
+  m_Size: {x: 4.72678, y: 2.0736449}
   m_Direction: 1
+--- !u!95 &7401819073317834803
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3520294920783812737}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 79fae8ce38dd7c04ea18e95e4732ce62, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3520294920851457330
 GameObject:
   m_ObjectHideFlags: 0

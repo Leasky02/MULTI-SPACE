@@ -7,6 +7,7 @@ public class MultipleTargetCamera : MonoBehaviour
 {
     //targets for camera
     [SerializeField] private List<Transform> targets;
+    [SerializeField] private Transform[] targetTransforms;
     public Vector3 offset;
 
     //rotation
@@ -115,8 +116,11 @@ public class MultipleTargetCamera : MonoBehaviour
             targets.Remove(targets[playerID]);
     }
 
-    public void AddTarget(GameObject newTarget)
+    public void ResetTarget()
     {
-        targets.Add(newTarget.transform);
+        //put targets back in order
+        targets.Remove(targets[0]);
+        targets.Add(targetTransforms[0]);
+        targets.Add(targetTransforms[1]);
     }
 }
