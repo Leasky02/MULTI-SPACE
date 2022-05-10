@@ -38,7 +38,7 @@ public class EnemyHealth : MonoBehaviour
     {
         //max health = 9x + c , x = wave , c = starting health
         //set to something closer to 15 once i add in weapon upgrades
-        maxHealth = 15 * WaveSystem.wave-1 + startingMaxHealth;
+        maxHealth = 10 * WaveSystem.wave-1 + startingMaxHealth;
 
         //set attackDamage according to equation Y=2X + C, X=wave , C= startingAttackdamage
         attackDamage = 2 * WaveSystem.wave-1 + startingAttackDamage;

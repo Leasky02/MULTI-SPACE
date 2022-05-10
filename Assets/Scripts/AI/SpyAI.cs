@@ -41,7 +41,7 @@ public class SpyAI : MonoBehaviour
         //set speed variation randomly
         speed = Random.Range(speed - 100, speed + 100);
         //set speed accodring to equation (subtle speed change)
-        speed += WaveSystem.wave * 40;
+        speed += WaveSystem.wave * 90;
         if (speed > 2500)
             speed = 2500;
 

@@ -31,7 +31,7 @@ public class WaveSystem : MonoBehaviour
     {
         //if single player then make game slightly easier
         if (MultiplayerManager.playerCount == 1)
-            enemyMultiplier -= 2;
+            enemyMultiplier -= 3;
         //start first wave
         Invoke("NextWave", 1f);
 
@@ -110,8 +110,12 @@ public class WaveSystem : MonoBehaviour
     //spawn alien
     private void SpawnAlien()
     {
-        checkAliens = true;
+        //limit aliens to 50 max in scene
+        if (totalEnemiesToSpawn > 50)
+            totalEnemiesToSpawn = 50;
 
+        checkAliens = true;
+        
         //subtract one from total enemies to spawn
         totalEnemiesToSpawn--;
         //create random alien variation at random location

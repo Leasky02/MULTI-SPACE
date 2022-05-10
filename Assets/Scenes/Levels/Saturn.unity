@@ -23488,7 +23488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingEnemies: 1
-  enemyMultiplier: 6
+  enemyMultiplier: 7
   totalEnemiesToSpawn: 0
   aliens:
   - {fileID: 1423114297915005671, guid: 6a6804c5297609a49b5c7d92029cd7c5, type: 3}
