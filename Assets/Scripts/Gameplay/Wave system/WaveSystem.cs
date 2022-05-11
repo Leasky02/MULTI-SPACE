@@ -31,7 +31,7 @@ public class WaveSystem : MonoBehaviour
     {
         //if single player then make game slightly easier
         if (MultiplayerManager.playerCount == 1)
-            enemyMultiplier -= 3;
+            enemyMultiplier -= 2;
         //start first wave
         Invoke("NextWave", 1f);
 

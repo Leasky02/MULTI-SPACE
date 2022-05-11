@@ -45,7 +45,7 @@ public class CommanderAI : MonoBehaviour
         //set speed variation randomly
         speed = Random.Range(speed - 100 , speed + 100);
         //set speed accodring to equation (subtle speed change)
-        speed += WaveSystem.wave * 90;
+        speed += WaveSystem.wave * 120;
 
         //set nextWayPointDistance variation randomly
         nextWaypointDistance = Random.Range(nextWaypointDistance - 0.2f, nextWaypointDistance + 0.5f);
