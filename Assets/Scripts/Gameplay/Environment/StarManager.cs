@@ -11,9 +11,23 @@ public class StarManager : MonoBehaviour
     private float scale;
     private float speed;
 
+    //used by planets only
+    [SerializeField] private bool isPlanet;
+    //boundries for planets to spawn
+    [SerializeField] private Transform boundary1;
+    [SerializeField] private Transform boundary2;
     // Start is called before the first frame update
     void Start()
     {
+        if(isPlanet)
+        {
+            //set position randomly
+            transform.position = new Vector2(Random.Range(boundary1.position.x, boundary2.position.x), Random.Range(boundary1.position.y, boundary2.position.y));
+            //call planet class
+            ClassPlanet();
+            return;
+        }
+
         //assign object a classID between 1 and 3
         classID = Random.Range(1, 4);
         //perform class specific function based on classID
@@ -55,14 +69,23 @@ public class StarManager : MonoBehaviour
         speed = 15f;
     }
 
+    private void ClassPlanet()
+    {
+        //set scale
+        float scale = Random.Range(0.7f, 1.1f);
+        transform.localScale = new Vector3(scale , scale , scale);
+        //set speed
+        speed = Random.Range(12f , 20f);
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
         //if the star has reached the boundry
-        if (transform.position.x <= -134)
+        if (transform.position.x <= -140)
         {
             //teleport to the opposite side of the boundry
-            gameObject.transform.position = new Vector2(96, transform.position.y);
+            gameObject.transform.position = new Vector2(140, transform.position.y);
         }
         //move star
         transform.Translate(Vector3.left * speed * Time.deltaTime / 10, Space.World);
