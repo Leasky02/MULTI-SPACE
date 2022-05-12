@@ -91,7 +91,7 @@ public class WaveSystem : MonoBehaviour
         //change UI tet in half a second (in sync with animation)
         waveDisplay.gameObject.GetComponent<Animator>().Play("WaveTransition");
         //cue text change
-        Invoke("ChangeText", 0.2f);
+        Invoke("ChangeText", 0.25f);
 
         if (PlayerHealth.deadPlayers.Count > 0)
         {

@@ -4965,7 +4965,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.16
   m_Pitch: 1.5
   Loop: 0
   Mute: 0
