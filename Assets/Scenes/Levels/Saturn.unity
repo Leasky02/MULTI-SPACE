@@ -1586,7 +1586,7 @@ Camera:
   field of view: 89.9
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 256
@@ -16140,8 +16140,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starPrefab: {fileID: 7761334848046337826, guid: 5ebc17bff077acb47aed511daba2c7d5, type: 3}
-  maxCount: 150
-  minCount: 80
+  maxCount: 250
+  minCount: 150
   boundary1: {fileID: 1351632914}
   boundary2: {fileID: 249446703}
 --- !u!1 &1179232513
@@ -25477,7 +25477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingEnemies: 1
-  enemyMultiplier: 6
+  enemyMultiplier: 5
   totalEnemiesToSpawn: 0
   aliens:
   - {fileID: 1423114297915005671, guid: 6a6804c5297609a49b5c7d92029cd7c5, type: 3}
