@@ -13,7 +13,7 @@ public class PauseScreen : MonoBehaviour
     [SerializeField] private Button resumeButton;
 
     //whether game can be paused or not
-    private bool canPause = true;
+    public bool canPause = true;
 
     // Update is called once per frame
     void Update()
@@ -21,7 +21,8 @@ public class PauseScreen : MonoBehaviour
         //if pause input is pressed
         if(Input.GetButtonDown("Pause"))
         {
-            if(canPause)
+            //if can pause and game isnt over
+            if(canPause && !EndGame.gameOver)
             {
                 //pause game
                 Pause();

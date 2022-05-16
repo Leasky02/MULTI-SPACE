@@ -49,6 +49,10 @@ public class PlayerHealth : MonoBehaviour
 
     [HideInInspector] public bool dead = false;
     public static bool oneRemaining = false;
+    private bool gameOver = false;
+
+    //end game manager
+    [SerializeField] private GameObject endGameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -147,7 +151,7 @@ public class PlayerHealth : MonoBehaviour
 
             //set UI elemnts
             nameDisplay.color = deadColour;
-
+            
             //Disable components
             gameObject.GetComponent<PlayerMovement>().enabled = false;
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
@@ -164,8 +168,13 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
-            //game over
-            Debug.Log("Game Over");
+            if(!gameOver)
+            {
+                //call game over function
+                endGameManager.GetComponent<EndGame>().GameOver();
+                gameOver = true;
+            }
+            
         }
     }
 

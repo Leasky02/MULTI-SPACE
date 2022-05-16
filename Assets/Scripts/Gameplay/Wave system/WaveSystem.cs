@@ -29,6 +29,8 @@ public class WaveSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //restart wave value
+        wave = 0;
         //if single player then make game slightly easier
         if (MultiplayerManager.playerCount == 1)
             enemyMultiplier -= 2;
