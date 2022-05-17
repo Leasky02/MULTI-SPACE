@@ -21,17 +21,36 @@ public class EndGame : MonoBehaviour
     [SerializeField] private Button p1SelectedButton;
     [SerializeField] private Button p2SelectedButton;
 
+    //time scale to go to
+    public static float requiredTimeScale = 1f;
+
     private void Start()
     {
+        //reset game over state
         gameOver = false;
+        //reset bullet and gun 
+        Bullet.damage = 50;
+        Gun.fireRate = 1.3f;
+
+        if(MultiplayerManager.playerCount == 2)
+        {
+            //reset player health states
+            PlayerHealth.oneRemaining = false;
+        }
+    }
+
+    private void Update()
+    {
+        //lerp to required time scale
+        Time.timeScale = Mathf.Lerp(Time.timeScale, requiredTimeScale, Time.deltaTime * 30);
     }
 
     public void GameOver()
     {
         gameOver = true;
 
-        //stop Time
-        Time.timeScale = 0f;
+        //stop time
+        requiredTimeScale = 0f;
 
         //if 1 player game
         if(MultiplayerManager.playerCount == 1)
@@ -54,5 +73,7 @@ public class EndGame : MonoBehaviour
             scoreManager.GetComponent<ScoreManager>().SaveP2Score();
         }
 
+        //play sound
+        GetComponent<AudioSource>().Play();
     }    
 }

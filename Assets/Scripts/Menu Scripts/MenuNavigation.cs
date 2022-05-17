@@ -77,7 +77,7 @@ public class MenuNavigation : MonoBehaviour
     private void Update()
     {
 
-        if(Input.GetButtonDown("Back"))
+        if(Input.GetButtonDown("Back") && canGoBack)
         {
             StartCoroutine("PlayerSelection");
         }

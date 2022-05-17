@@ -173,6 +173,18 @@ public class PlayerHealth : MonoBehaviour
                 //call game over function
                 endGameManager.GetComponent<EndGame>().GameOver();
                 gameOver = true;
+
+                //play death sound audio
+                deathPlayer.clip = die_clip;
+                deathPlayer.Play();
+                //play death particles
+                myParticles.Play();
+
+                //Disable components
+                gameObject.GetComponent<PlayerMovement>().enabled = false;
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                gameObject.GetComponent<Gun>().enabled = false;
+                gameObject.GetComponent<AudioSource>().enabled = false;
             }
             
         }

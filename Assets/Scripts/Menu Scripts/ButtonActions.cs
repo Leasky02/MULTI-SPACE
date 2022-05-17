@@ -42,6 +42,7 @@ public class ButtonActions : MonoBehaviour
 
         //set time to default
         Time.timeScale = 1f;
+        EndGame.requiredTimeScale = 1f;
 
         //wait before changing scene
         yield return new WaitForSeconds(1f);
