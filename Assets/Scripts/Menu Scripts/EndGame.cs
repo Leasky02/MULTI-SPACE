@@ -48,6 +48,8 @@ public class EndGame : MonoBehaviour
     public void GameOver()
     {
         gameOver = true;
+        //reset dimensional shift static variable
+        DimensionalShift.is3D = false;
 
         //stop time
         requiredTimeScale = 0f;

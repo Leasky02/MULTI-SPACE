@@ -29,10 +29,10 @@ InputManager:
     positiveButton: 
     altNegativeButton: 
     altPositiveButton: 
-    gravity: 100
-    dead: 0.001
-    sensitivity: 3
-    snap: 1
+    gravity: 1
+    dead: 0.2
+    sensitivity: 1
+    snap: 0
     invert: 0
     type: 2
     axis: 0
@@ -61,11 +61,11 @@ InputManager:
     positiveButton: 
     altNegativeButton: 
     altPositiveButton: 
-    gravity: 100
-    dead: 0.001
-    sensitivity: 3
-    snap: 1
-    invert: 0
+    gravity: 1
+    dead: 0.2
+    sensitivity: 1
+    snap: 0
+    invert: 1
     type: 2
     axis: 1
     joyNum: 1
@@ -93,10 +93,10 @@ InputManager:
     positiveButton: 
     altNegativeButton: 
     altPositiveButton: 
-    gravity: 100
-    dead: 0.001
-    sensitivity: 3
-    snap: 1
+    gravity: 1
+    dead: 0.2
+    sensitivity: 1
+    snap: 0
     invert: 0
     type: 2
     axis: 0
@@ -125,11 +125,11 @@ InputManager:
     positiveButton: 
     altNegativeButton: 
     altPositiveButton: 
-    gravity: 100
-    dead: 0.001
-    sensitivity: 3
-    snap: 1
-    invert: 0
+    gravity: 1
+    dead: 0.2
+    sensitivity: 1
+    snap: 0
+    invert: 1
     type: 2
     axis: 1
     joyNum: 2
@@ -139,7 +139,7 @@ InputManager:
     descriptiveNegativeName: 
     negativeButton: j
     positiveButton: 
-    altNegativeButton: joystick button 2
+    altNegativeButton: joystick 1 button 2
     altPositiveButton: 
     gravity: 100
     dead: 0.001
@@ -155,7 +155,7 @@ InputManager:
     descriptiveNegativeName: 
     negativeButton: '[4]'
     positiveButton: 
-    altNegativeButton: joystick button 2
+    altNegativeButton: joystick 2 button 2
     altPositiveButton: 
     gravity: 100
     dead: 0.001
@@ -301,10 +301,10 @@ InputManager:
     positiveButton: 
     altNegativeButton: 
     altPositiveButton: 
-    gravity: 0
-    dead: 0.19
+    gravity: 1
+    dead: 0.2
     sensitivity: 1
-    snap: 0
+    snap: 1
     invert: 0
     type: 2
     axis: 0
@@ -333,11 +333,11 @@ InputManager:
     positiveButton: 
     altNegativeButton: 
     altPositiveButton: 
-    gravity: 0
-    dead: 0.19
+    gravity: 1
+    dead: 0.2
     sensitivity: 1
-    snap: 0
-    invert: 0
+    snap: 1
+    invert: 1
     type: 2
     axis: 1
     joyNum: 1

@@ -15,6 +15,8 @@ public class PauseScreen : MonoBehaviour
     //whether game can be paused or not
     public bool canPause = true;
 
+    public static bool paused = false;
+
     // Update is called once per frame
     void Update()
     {
@@ -32,6 +34,7 @@ public class PauseScreen : MonoBehaviour
 
     private void Pause()
     {
+        EndGame.requiredTimeScale = 0f;
         //disable pausing again
         canPause = false;
 
@@ -51,6 +54,7 @@ public class PauseScreen : MonoBehaviour
     {
         //pause time
         Time.timeScale = 1f;
+        EndGame.requiredTimeScale = 1f;
 
         //enable inGameScreen
         gameScreen.SetActive(true);

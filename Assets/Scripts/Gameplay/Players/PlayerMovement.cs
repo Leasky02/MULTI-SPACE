@@ -74,12 +74,12 @@ public class PlayerMovement : MonoBehaviour
                 rb.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerID), 0) * speed * Time.deltaTime, ForceMode2D.Impulse);
 
                 //set rotation of object LEFT
-                if(Input.GetAxis("Horizontal" + playerID) < -0.1)
+                if(Input.GetAxis("Horizontal" + playerID) < -0.2)
                 {
                     currentRotation = 90f;
                 }
                 //set rotation of object RIGHT
-                if (Input.GetAxis("Horizontal" + playerID) > 0.1)
+                if (Input.GetAxis("Horizontal" + playerID) > 0.2)
                 {
                     currentRotation = 270f;
                 }
@@ -100,12 +100,12 @@ public class PlayerMovement : MonoBehaviour
                 rb.AddForce(new Vector2(0 , Input.GetAxis("Vertical" + playerID)) * speed * Time.deltaTime , ForceMode2D.Impulse);
 
                 //set rotation of object DOWN
-                if (Input.GetAxis("Vertical" + playerID) < -0.1)
+                if (Input.GetAxis("Vertical" + playerID) < -0.2)
                 {
                     currentRotation = 180f;
                 }
                 //set rotation of object UP
-                if (Input.GetAxis("Vertical" + playerID) > 0.1)
+                if (Input.GetAxis("Vertical" + playerID) > 0.2)
                 {
                     currentRotation = 0f;
                 }
