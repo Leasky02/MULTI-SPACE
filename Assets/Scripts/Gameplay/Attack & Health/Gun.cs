@@ -27,6 +27,8 @@ public class Gun : MonoBehaviour
             //spawn bullet at the spawn position
             var myBullet = Instantiate(bulletPrefab, bulletSpawnPosition.position, Quaternion.identity);
 
+            //left joystick input
+            
             //create variable holding the input
             float horizontalInput = Input.GetAxis("Horizontal" + playerID);
             float verticalInput = Input.GetAxis("Vertical" + playerID);

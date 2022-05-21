@@ -25,10 +25,18 @@ public class Bullet : MonoBehaviour
 
     public void Shoot(float directionToFire , float horizontalInput , float verticalInput)
     {
+        //direction based on player movement direction input
         Vector2 movementDirection = new Vector2(horizontalInput, verticalInput);
         movementDirection.Normalize();
 
+        //round direction to nearest 45
+        Vector2 roundedDirection = movementDirection;
+        roundedDirection.x = Mathf.Round(roundedDirection.x / 45) * 45;
+        roundedDirection.y = Mathf.Round(roundedDirection.y / 45) * 45;
+
+        //angle used in case no direction input
         transform.eulerAngles = new Vector3(0, 0, directionToFire);
+
         if(movementDirection != Vector2.zero)
         {
             //add force in direction

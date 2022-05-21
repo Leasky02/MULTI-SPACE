@@ -26,11 +26,19 @@ public class PlayerMovement : MonoBehaviour
     //animator check 
     private bool animPlaying = false;
 
+    //holding direction of players movement
+    Vector2 movementDirection;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        //store current rotation of object
         currentRotation = transform.rotation.z;
+
+        //set movement direction
+        movementDirection = new Vector2(Input.GetAxis("Horizontal" + playerID), Input.GetAxis("Vertical" + playerID)).normalized;
     }
 
     // Update is called once per frame
@@ -62,78 +70,44 @@ public class PlayerMovement : MonoBehaviour
                 animPlaying = false;
             }
         }
-        /* used for 2D moveme t ONLY
-        //if player isn't moving vertically
-        if(!movingVertically)
-        {
-            //if player is moving in any horizontal direction
-            if (Input.GetAxis("Horizontal" + playerID) != 0)
-            {
-                movingHorizontally = true;
-                //apply force * speed
-                rb.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerID), 0) * speed * Time.deltaTime, ForceMode2D.Impulse);
 
-                //set rotation of object LEFT
-                if(Input.GetAxis("Horizontal" + playerID) < -0.2)
-                {
-                    currentRotation = 90f;
-                }
-                //set rotation of object RIGHT
-                if (Input.GetAxis("Horizontal" + playerID) > 0.2)
-                {
-                    currentRotation = 270f;
-                }
-            }
-            else
-            {
-                movingHorizontally = false;
-            }
-        }
-
-        if(!movingHorizontally)
-        {
-            //if player is moving in any vertical direction
-            if (Input.GetAxis("Vertical" + playerID) != 0)
-            {
-                movingVertically = true;
-                //apply force * speed
-                rb.AddForce(new Vector2(0 , Input.GetAxis("Vertical" + playerID)) * speed * Time.deltaTime , ForceMode2D.Impulse);
-
-                //set rotation of object DOWN
-                if (Input.GetAxis("Vertical" + playerID) < -0.2)
-                {
-                    currentRotation = 180f;
-                }
-                //set rotation of object UP
-                if (Input.GetAxis("Vertical" + playerID) > 0.2)
-                {
-                    currentRotation = 0f;
-                }
-            }
-            else
-            {
-                movingVertically = false;
-            }
-        */
-        //used for moving both up/down and left/right at the same time
+        //left joystick input
+        
         //create variable holding the input
         float horizontalInput = Input.GetAxis("Horizontal" + playerID);
         float verticalInput = Input.GetAxis("Vertical" + playerID);
 
         //set the movement direction based on the input
-        Vector2 movementDirection = new Vector2(horizontalInput, verticalInput);
-        //normalise the direction
-        movementDirection.Normalize();
-
+        //IF there is any input
+        if (new Vector2(horizontalInput, verticalInput) != Vector2.zero)
+        {
+            movementDirection = new Vector2(horizontalInput, verticalInput);
+            //normalize its magnitude to keep speed of movement consistent
+            movementDirection.Normalize();
+        }
         // move the character
         rb.AddForce(new Vector2(horizontalInput, verticalInput) * speed * Time.deltaTime, ForceMode2D.Impulse);
     
         //set rotation of object
         Quaternion currentAngle = transform.rotation;
-        Quaternion newAngle = Quaternion.LookRotation(Vector3.forward , movementDirection);
 
         //rotate
-        if (movementDirection != Vector2.zero)
-            transform.rotation = Quaternion.RotateTowards(currentAngle, newAngle, Time.deltaTime * 1100);
+        //if the player is moving
+        if(movementDirection != Vector2.zero)
+        {
+            //rotate to angle of movement
+            Quaternion newAngle = Quaternion.LookRotation(Vector3.forward, movementDirection);
+            transform.rotation = Quaternion.RotateTowards(currentAngle, newAngle, Time.fixedDeltaTime * 800);
+        }
+        else
+        {
+            //round direction to nearest 45
+            Vector2 roundedDirection = movementDirection;
+            roundedDirection.x = Mathf.Round(roundedDirection.x / 45) * 45;
+            roundedDirection.y = Mathf.Round(roundedDirection.y / 45) * 45;
+            //rotate to snapped direction
+            Quaternion newAngle = Quaternion.LookRotation(Vector3.forward, roundedDirection);
+            transform.rotation = Quaternion.RotateTowards(currentAngle, newAngle, Time.fixedDeltaTime * 800);
+        }
     }
 }

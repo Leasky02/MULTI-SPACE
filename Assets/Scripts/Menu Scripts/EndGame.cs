@@ -51,8 +51,6 @@ public class EndGame : MonoBehaviour
         if(!PauseScreen.paused)
         {
             gameOver = true;
-            //reset dimensional shift static variable
-            DimensionalShift.is3D = false;
 
             //stop time
             requiredTimeScale = 0f;
