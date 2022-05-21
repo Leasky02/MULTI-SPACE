@@ -18,11 +18,11 @@ TagManager:
   - PostProcessing
   - Obstacle
   - Player
-  - Enemy
+  - Spy
   - Bullet
-  - 
+  - Soldier
   - PointOrb
-  - 
+  - Commander
   - 
   - 
   - 

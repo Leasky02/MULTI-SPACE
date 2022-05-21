@@ -36,6 +36,9 @@ public class SoldierAI : MonoBehaviour
         speed = Random.Range(speed - 100, speed + 100);
         //set speed accodring to equation (subtle speed change)
         speed += WaveSystem.wave * 120;
+        //if speed is too high keep within limit
+        if (speed > 2210)
+            speed = 2210;
 
         //set nextWayPointDistance variation randomly
         nextWaypointDistance = Random.Range(nextWaypointDistance - 0.5f, nextWaypointDistance + 1f);

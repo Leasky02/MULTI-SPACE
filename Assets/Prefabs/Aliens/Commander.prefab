@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3520294919894812064}
   - component: {fileID: 3520294919894811743}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Commander GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 3520294920783812794}
   - component: {fileID: 3520294920783812796}
   - component: {fileID: 7401819073317834803}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Commander
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 3520294920851457329}
   - component: {fileID: 3520294920851457327}
   - component: {fileID: 3520294920851457328}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Particle System
   m_TagString: Particles
   m_Icon: {fileID: 0}

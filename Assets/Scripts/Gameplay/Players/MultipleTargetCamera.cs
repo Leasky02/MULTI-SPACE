@@ -39,7 +39,7 @@ public class MultipleTargetCamera : MonoBehaviour
         }
     }
     //called after every update
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         //if no target, return
         if (targets.Count == 0)

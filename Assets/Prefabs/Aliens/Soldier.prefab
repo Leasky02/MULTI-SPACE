@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6624774872195526334}
   - component: {fileID: 6624774872195526335}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Soldier GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 6624774873044652290}
   - component: {fileID: 6624774873044652288}
   - component: {fileID: 2125977217339920651}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Soldier
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -354,7 +354,7 @@ GameObject:
   - component: {fileID: 6624774873723295428}
   - component: {fileID: 6624774873723295430}
   - component: {fileID: 6624774873723295429}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: 'Particle System '
   m_TagString: Untagged
   m_Icon: {fileID: 0}

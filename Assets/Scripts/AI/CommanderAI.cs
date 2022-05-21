@@ -46,6 +46,9 @@ public class CommanderAI : MonoBehaviour
         speed = Random.Range(speed - 100 , speed + 100);
         //set speed accodring to equation (subtle speed change)
         speed += WaveSystem.wave * 120;
+        //if speed is too high keep within limit
+        if (speed > 2210)
+            speed = 2210;
 
         //set nextWayPointDistance variation randomly
         nextWaypointDistance = Random.Range(nextWaypointDistance - 0.2f, nextWaypointDistance + 0.5f);
@@ -71,10 +74,14 @@ public class CommanderAI : MonoBehaviour
         if(healthScript.currentHealth < lowHealthValue)
         {
             lowHealth = true;
+            //play low health animation
+            GetComponent<Animator>().Play("CommanderLowHealth");
         }
-        else
+        else if(healthScript.currentHealth > lowHealthValue + 20)
         {
             lowHealth = false;
+            //play normal health animation
+            GetComponent<Animator>().Play("CommanderMaintain");
         }
 
         //update target

@@ -102,13 +102,10 @@ public class PlayerScore : MonoBehaviour
         WeaponUpgrade_TXT.text = ("Weapon Upgrade: " + upgradeLevel);
 
         //upgrade bullet damage
-        Bullet.damage += 8;
+        Bullet.damage += 5;
         //upgrade gun fire rate
-        if(Gun.fireRate < 2.0f)
-        {
-            Gun.fireRate += 0.2f;
-            if (Gun.fireRate > 2.0f)
-                Gun.fireRate = 2.0f;
-        }
+        Gun.fireRate += 0.2f;
+        if (Gun.fireRate > 2f)
+           Gun.fireRate = 2f;
     }
 }

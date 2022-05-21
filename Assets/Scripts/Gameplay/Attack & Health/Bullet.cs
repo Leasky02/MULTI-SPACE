@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bullet : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class Bullet : MonoBehaviour
     //audio clips
     [SerializeField] private AudioClip bulletShoot;
     [SerializeField] private AudioClip bulletHit;
+    //damage display prefab
+    [SerializeField] private GameObject damage_TXT;
 
     private void Start()
     {
@@ -20,44 +23,21 @@ public class Bullet : MonoBehaviour
         GetComponent<AudioSource>().pitch = Random.Range(0.8f, 1.5f);
     }
 
-    public void Shoot(GameObject player)
+    public void Shoot(float directionToFire , float horizontalInput , float verticalInput)
     {
-        //set damage of bullet according to upgrade level
+        Vector2 movementDirection = new Vector2(horizontalInput, verticalInput);
+        movementDirection.Normalize();
 
-        //set direction to fire to player rotation
-        float directionToFire = player.GetComponent<PlayerMovement>().currentRotation ;
-
-        //fire up
-        if (directionToFire == 0)
+        transform.eulerAngles = new Vector3(0, 0, directionToFire);
+        if(movementDirection != Vector2.zero)
         {
-            //set bullet rotation
-            transform.eulerAngles = new Vector3(0, 0, directionToFire);
-            //add force
-            GetComponent<Rigidbody2D>().AddForce(Vector2.up * speed * Time.deltaTime, ForceMode2D.Impulse);
+            //add force in direction
+            GetComponent<Rigidbody2D>().AddForce(movementDirection * speed * Time.fixedDeltaTime, ForceMode2D.Impulse);
         }
-        //fire down
-        if (directionToFire == 180)
+        else
         {
-            //set bullet rotation
-            transform.eulerAngles = new Vector3(0, 0, directionToFire);
-            //add force
-            GetComponent<Rigidbody2D>().AddForce(Vector2.down * speed * Time.deltaTime, ForceMode2D.Impulse);
-        }
-        //fire left
-        if (directionToFire == 90)
-        {
-            //set bullet rotation
-            transform.eulerAngles = new Vector3(0, 0, directionToFire);
-            //add force
-            GetComponent<Rigidbody2D>().AddForce(Vector2.left * speed * Time.deltaTime, ForceMode2D.Impulse);
-        }
-        //fire right
-        if (directionToFire == 270)
-        {
-            //set bullet rotation
-            transform.eulerAngles = new Vector3(0, 0, directionToFire);
-            //add force
-            GetComponent<Rigidbody2D>().AddForce(Vector2.right * speed * Time.deltaTime, ForceMode2D.Impulse);
+            //add force in direction
+            GetComponent<Rigidbody2D>().AddForce(transform.up.normalized * speed * Time.fixedDeltaTime, ForceMode2D.Impulse);
         }
 
         //Play shooting sound
@@ -76,6 +56,14 @@ public class Bullet : MonoBehaviour
             //Play target HIT sound
             GetComponent<AudioSource>().clip = bulletHit;
             GetComponent<AudioSource>().Play();
+
+            //create damage display object
+            //spawn text object
+            GameObject damageDisplay = Instantiate(damage_TXT, transform.position, Quaternion.identity);
+            //set text of object (child of instantiated object)
+            damageDisplay.gameObject.transform.GetChild(0).GetComponent<Text>().text = ("" + (damage + Random.Range(-2 , 2)));
+            //set colour of the text
+            damageDisplay.gameObject.transform.GetChild(0).GetComponent<Text>().color = new Color(0.589082f, 0.9622642f, 0.6436454f, 1f);
         }
         //remove bullet
         GetComponent<SpriteRenderer>().enabled = false;

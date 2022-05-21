@@ -17,6 +17,11 @@ public class PauseScreen : MonoBehaviour
 
     public static bool paused = false;
 
+    private void Start()
+    {
+        paused = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -34,6 +39,7 @@ public class PauseScreen : MonoBehaviour
 
     private void Pause()
     {
+        paused = true;
         EndGame.requiredTimeScale = 0f;
         //disable pausing again
         canPause = false;
@@ -52,6 +58,7 @@ public class PauseScreen : MonoBehaviour
 
     public void UnPause()
     {
+        paused = false;
         //pause time
         Time.timeScale = 1f;
         EndGame.requiredTimeScale = 1f;

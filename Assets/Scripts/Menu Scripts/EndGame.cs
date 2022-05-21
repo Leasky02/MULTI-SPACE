@@ -47,35 +47,39 @@ public class EndGame : MonoBehaviour
 
     public void GameOver()
     {
-        gameOver = true;
-        //reset dimensional shift static variable
-        DimensionalShift.is3D = false;
-
-        //stop time
-        requiredTimeScale = 0f;
-
-        //if 1 player game
-        if(MultiplayerManager.playerCount == 1)
+        //only end game if game isn't paused
+        if(!PauseScreen.paused)
         {
-            //Switch canvas
-            buttonActionManager.GetComponent<ButtonActions>().SwitchMenu(inGameCanvas, p1EndGameCanvas);
-            //select button as default
-            p1SelectedButton.Select();
-            //save player 1 score
-            scoreManager.GetComponent<ScoreManager>().SaveP1Score();
-        }
-        //else, its a 2 player game
-        else
-        {
-            //Switch canvas
-            buttonActionManager.GetComponent<ButtonActions>().SwitchMenu(inGameCanvas, p2EndGameCanvas);
-            //select button as default
-            p2SelectedButton.Select();
-            //save player 2 score
-            scoreManager.GetComponent<ScoreManager>().SaveP2Score();
-        }
+            gameOver = true;
+            //reset dimensional shift static variable
+            DimensionalShift.is3D = false;
 
-        //play sound
-        GetComponent<AudioSource>().Play();
+            //stop time
+            requiredTimeScale = 0f;
+
+            //if 1 player game
+            if (MultiplayerManager.playerCount == 1)
+            {
+                //Switch canvas
+                buttonActionManager.GetComponent<ButtonActions>().SwitchMenu(inGameCanvas, p1EndGameCanvas);
+                //select button as default
+                p1SelectedButton.Select();
+                //save player 1 score
+                scoreManager.GetComponent<ScoreManager>().SaveP1Score();
+            }
+            //else, its a 2 player game
+            else
+            {
+                //Switch canvas
+                buttonActionManager.GetComponent<ButtonActions>().SwitchMenu(inGameCanvas, p2EndGameCanvas);
+                //select button as default
+                p2SelectedButton.Select();
+                //save player 2 score
+                scoreManager.GetComponent<ScoreManager>().SaveP2Score();
+            }
+
+            //play sound
+            GetComponent<AudioSource>().Play();
+        }
     }    
 }

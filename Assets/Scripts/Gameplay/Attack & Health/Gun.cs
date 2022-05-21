@@ -23,10 +23,16 @@ public class Gun : MonoBehaviour
         if(Input.GetButton("Shoot" + playerID) && Time.time >= nextTimeToFire && !DimensionalShift.is3D)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
+
             //spawn bullet at the spawn position
             var myBullet = Instantiate(bulletPrefab, bulletSpawnPosition.position, Quaternion.identity);
+
+            //create variable holding the input
+            float horizontalInput = Input.GetAxis("Horizontal" + playerID);
+            float verticalInput = Input.GetAxis("Vertical" + playerID);
+
             //call bullet to shoot after spawning with self as parameter
-            myBullet.GetComponent<Bullet>().Shoot(gameObject);
+            myBullet.GetComponent<Bullet>().Shoot(transform.eulerAngles.z , horizontalInput , verticalInput);
         }
     }
 }

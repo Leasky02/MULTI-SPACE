@@ -22,8 +22,11 @@ public class MenuNavigation : MonoBehaviour
     //coroutine to allow button disable to be delay
     public IEnumerator LevelSelection()
     {
-        //play audio source
-        menuContainer.GetComponent<AudioSource>().Play();
+        if (!menuContainer.GetComponent<AudioSource>().isPlaying)
+        {
+            //play audio source
+            menuContainer.GetComponent<AudioSource>().Play();
+        }
 
         rotation_Y = -90;
 
@@ -47,8 +50,11 @@ public class MenuNavigation : MonoBehaviour
     //coroutine to allow button disable to be delay
     public IEnumerator PlayerSelection()
     {
-        //play audio source
-        menuContainer.GetComponent<AudioSource>().Play();
+        if(!menuContainer.GetComponent<AudioSource>().isPlaying)
+        {
+            //play audio source
+            menuContainer.GetComponent<AudioSource>().Play();
+        }
 
         rotation_Y = 0;
 

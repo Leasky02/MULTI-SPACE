@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //if player IS moving
         if (Input.GetAxis("Horizontal" + playerID)  != 0 || Input.GetAxis("Vertical" + playerID) != 0)
@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
                 animPlaying = false;
             }
         }
-
+        /* used for 2D moveme t ONLY
         //if player isn't moving vertically
         if(!movingVertically)
         {
@@ -114,10 +114,26 @@ public class PlayerMovement : MonoBehaviour
             {
                 movingVertically = false;
             }
-        }
+        */
+        //used for moving both up/down and left/right at the same time
+        //create variable holding the input
+        float horizontalInput = Input.GetAxis("Horizontal" + playerID);
+        float verticalInput = Input.GetAxis("Vertical" + playerID);
+
+        //set the movement direction based on the input
+        Vector2 movementDirection = new Vector2(horizontalInput, verticalInput);
+        //normalise the direction
+        movementDirection.Normalize();
+
+        // move the character
+        rb.AddForce(new Vector2(horizontalInput, verticalInput) * speed * Time.deltaTime, ForceMode2D.Impulse);
+    
         //set rotation of object
         Quaternion currentAngle = transform.rotation;
-        Quaternion newAngle = Quaternion.Euler(0,0,currentRotation);
-        transform.rotation = Quaternion.RotateTowards(currentAngle, newAngle, Time.deltaTime * 1000);
+        Quaternion newAngle = Quaternion.LookRotation(Vector3.forward , movementDirection);
+
+        //rotate
+        if (movementDirection != Vector2.zero)
+            transform.rotation = Quaternion.RotateTowards(currentAngle, newAngle, Time.deltaTime * 1100);
     }
 }

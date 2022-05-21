@@ -38,6 +38,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private AudioClip revive_clip;
     //particles for death
     [SerializeField] private ParticleSystem myParticles;
+    //prefab of the damage text
+    [SerializeField] private GameObject damage_TXT;
 
     //health values
     [SerializeField] private float maxHealth = 100f;
@@ -68,6 +70,16 @@ public class PlayerHealth : MonoBehaviour
     {
         if(receiveDamage && !dead)
         {
+            //spawn text object
+            GameObject damageDisplay = Instantiate(damage_TXT, transform.position , Quaternion.identity);
+            //set text of object (child of instantiated object)
+            damageDisplay.gameObject.transform.GetChild(0).GetComponent<Text>().text = ("" + (damage + Random.Range(-2, 2)));
+            //set colour of the text
+            if(playerID == 1)
+                damageDisplay.gameObject.transform.GetChild(0).GetComponent<Text>().color = new Color(0.8679245f , 0.281666f , 0.281666f , 1f);
+            else if (playerID == 2)
+                damageDisplay.gameObject.transform.GetChild(0).GetComponent<Text>().color = new Color(0.2823529f, 0.3398342f, 0.8666667f, 1f);
+
             //prevent player from receiving damage again
             receiveDamage = false;
             Invoke("AllowReceiveDamage", 0.3f);

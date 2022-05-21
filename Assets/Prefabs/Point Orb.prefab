@@ -4904,6 +4904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ps: {fileID: 2877807923716687658}
+  damage_TXT: {fileID: 5808985587211107153, guid: ffb35f50740fd4b489f653c465069e31, type: 3}
 --- !u!95 &2877807924915453456
 Animator:
   serializedVersion: 3
